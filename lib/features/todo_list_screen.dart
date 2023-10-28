@@ -19,46 +19,51 @@ class TodoListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todosCubitState = context.watch<TodoCubit>().state;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
-      ),
-      body: todosCubitState.when(
-        initial: (todos) {
-          if (todos.isNotEmpty) {
-            return ListView.builder(
-              itemCount: todos.length,
-              itemBuilder: (context, i) {
-                return ListTile(
-                  leading: Checkbox(
-                    value: todos[i].isCompleted,
-                    onChanged: (value) {
-                      context.read<TodoCubit>().toggleTodoStatus(todos[i]);
-                    },
-                  ),
-                  title: Text(todos[i].title),
-                );
-              },
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _dialogBuilder(context);
-        },
-        tooltip: 'Add Todo',
-        child: const Icon(Icons.add),
-      ),
+    return todosCubitState.when(
+      initial: (todos) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(title),
+          ),
+          body: todos.isNotEmpty
+              ? ListView.builder(
+                  itemCount: todos.length,
+                  itemBuilder: (context, i) {
+                    return ListTile(
+                      leading: Checkbox(
+                        value: todos[i].isCompleted,
+                        onChanged: (value) {
+                          context.read<TodoCubit>().toggleTodoStatus(todos[i]);
+                        },
+                      ),
+                      title: Text(todos[i].title),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          context.read<TodoCubit>().deleteTodo(todos[i].id);
+                        },
+                      ),
+                    );
+                  },
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              await _dialogBuilder(context);
+            },
+            tooltip: 'Add Todo',
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
     );
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
+    final TodoCubit cubit = BlocProvider.of<TodoCubit>(context);
     myController.text = "";
     return showDialog<void>(
       context: context,
@@ -66,10 +71,10 @@ class TodoListScreen extends StatelessWidget {
         return AlertDialog(
           title: const Text('Add Todo'),
           content: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextField(
-              controller: myController, // Set the controller here
-              decoration: InputDecoration(
+              controller: myController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter your todo',
               ),
@@ -82,9 +87,9 @@ class TodoListScreen extends StatelessWidget {
               ),
               child: const Text('Add'),
               onPressed: () {
-                String enteredText = myController.text; // Get the text from the controller
+                String enteredText = myController.text;
                 if (enteredText != "") {
-                  context.read<TodoCubit>().addNewTodo(Todo(id: getRandomId(), title: enteredText, isCompleted: false));
+                  cubit.addNewTodo(Todo(id: getRandomId(), title: enteredText, isCompleted: false));
                   Navigator.of(context).pop();
                 }
               },

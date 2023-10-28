@@ -32,4 +32,10 @@ class TodoCubit extends Cubit<TodoState> {
     todos = updatedTodos;
     emit(state.copyWith(todos: updatedTodos));
   }
+
+  Future<void> deleteTodo(String id) async {
+    final updatedTodos = todos.where((todo) => todo.id != id).toList();
+    todos = updatedTodos;
+    emit(state.copyWith(todos: updatedTodos));
+  }
 }
