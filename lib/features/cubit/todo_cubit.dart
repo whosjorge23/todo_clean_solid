@@ -9,33 +9,29 @@ part 'todo_cubit.freezed.dart';
 class TodoCubit extends Cubit<TodoState> {
   TodoCubit() : super(const TodoState.initial());
 
-  List<Todo> todos = [];
-
   Future<void> loadTodos() async {
-    emit(state.copyWith(todos: todos));
+    emit(state.copyWith(todos: []));
   }
 
-  Future<void> addNewTodo(Todo todo) async {
-    todos.add(todo);
-    emit(state.copyWith(todos: todos));
+  Future<void> addNewTodo(Todo? todo) async {
+    List<Todo> todoList = List.from(state.todos);
+    if (todo != null) {
+      todoList.add(todo);
+      emit(state.copyWith(todos: todoList));
+    }
   }
 
-  Future<void> toggleTodoStatus(Todo todo) async {
-    final updatedTodos = todos.map((td) {
-      if (td.id == todo.id) {
-        // Toggle the isCompleted property
-        return td.copyWith(isCompleted: !td.isCompleted);
-      }
-      return td;
-    }).toList();
+  Future<void> toggleTodoStatus(int index, bool isChecked) async {
+    List<Todo> todoList = List.from(state.todos);
+    final updatedTodo = todoList.elementAt(index).copyWith(isCompleted: isChecked);
+    todoList[index] = updatedTodo;
 
-    todos = updatedTodos;
-    emit(state.copyWith(todos: updatedTodos));
+    emit(state.copyWith(todos: todoList));
   }
 
-  Future<void> deleteTodo(String id) async {
-    final updatedTodos = todos.where((todo) => todo.id != id).toList();
-    todos = updatedTodos;
-    emit(state.copyWith(todos: updatedTodos));
+  Future<void> deleteTodo(int index) async {
+    List<Todo> todoList = List.from(state.todos);
+    todoList.removeAt(index);
+    emit(state.copyWith(todos: todoList));
   }
 }
