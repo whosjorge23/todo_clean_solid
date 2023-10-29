@@ -46,7 +46,7 @@ class TodoListScreen extends StatelessWidget {
                   },
                 )
               : const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('Nothing to display'),
                 ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
