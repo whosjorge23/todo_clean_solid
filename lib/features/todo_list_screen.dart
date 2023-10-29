@@ -28,20 +28,25 @@ class TodoListScreen extends StatelessWidget {
               ? ListView.builder(
                   itemCount: todos.length,
                   itemBuilder: (context, i) {
-                    return ListTile(
-                      leading: Checkbox(
-                        value: todos[i].isCompleted,
-                        onChanged: (value) {
-                          context.read<TodoCubit>().toggleTodoStatus(i, value!);
-                        },
-                      ),
-                      title: Text(todos[i].title),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          context.read<TodoCubit>().deleteTodo(i);
-                        },
-                      ),
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: Checkbox(
+                            value: todos[i].isCompleted,
+                            onChanged: (value) {
+                              context.read<TodoCubit>().toggleTodoStatus(i, value!);
+                            },
+                          ),
+                          title: Text(todos[i].title),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              context.read<TodoCubit>().deleteTodo(i);
+                            },
+                          ),
+                        ),
+                        const Divider()
+                      ],
                     );
                   },
                 )
