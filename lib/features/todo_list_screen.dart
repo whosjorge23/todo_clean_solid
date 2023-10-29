@@ -5,6 +5,7 @@ import 'package:todo_clean_solid/features/cubit/todo_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_clean_solid/utils/text_style.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatelessWidget {
@@ -22,7 +23,10 @@ class TodoListScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text(title),
+            title: Text(
+              title,
+              style: getQuicksandSemiBold(),
+            ),
           ),
           body: todos.isNotEmpty
               ? ListView.builder(
@@ -37,7 +41,10 @@ class TodoListScreen extends StatelessWidget {
                               context.read<TodoCubit>().toggleTodoStatus(i, value!);
                             },
                           ),
-                          title: Text(todos[i].title),
+                          title: Text(
+                            todos[i].title,
+                            style: getQuicksandMedium(),
+                          ),
                           trailing: IconButton(
                             icon: const Icon(Icons.close),
                             onPressed: () {
@@ -50,8 +57,11 @@ class TodoListScreen extends StatelessWidget {
                     );
                   },
                 )
-              : const Center(
-                  child: Text('Nothing to display'),
+              : Center(
+                  child: Text(
+                    'Nothing to display',
+                    style: getQuicksandSemiBold(),
+                  ),
                 ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
@@ -61,6 +71,16 @@ class TodoListScreen extends StatelessWidget {
             tooltip: 'Add Todo',
             child: const Icon(Icons.add),
           ),
+          // bottomNavigationBar: Padding(
+          //   padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 30),
+          //   child: TextField(
+          //     controller: myController,
+          //     decoration: const InputDecoration(
+          //       // border: OutlineInputBorder(),
+          //       hintText: 'Enter your todo',
+          //     ),
+          //   ),
+          // ),
         );
       },
     );
@@ -73,14 +93,18 @@ class TodoListScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Todo'),
+          title: Text(
+            'Add Todo',
+            style: getQuicksandMedium(),
+          ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextField(
               controller: myController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter your todo',
+                hintStyle: getQuicksandRegular(),
               ),
             ),
           ),
@@ -89,7 +113,10 @@ class TodoListScreen extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Add'),
+              child: Text(
+                'Add',
+                style: getQuicksandMedium(),
+              ),
               onPressed: () {
                 String enteredText = myController.text;
                 if (enteredText != "") {
