@@ -1,11 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_clean_solid/features/cubit/todo_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_clean_solid/utils/text_style.dart';
+import 'package:todo_clean_solid/extension/text_style.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class TodoListScreen extends StatelessWidget {
   Random random = Random();
   final myController = TextEditingController();
   var uuid = const Uuid();
+  final myTextStyle = const TextStyle();
 
   @override
   Widget build(BuildContext context) {
@@ -25,42 +26,50 @@ class TodoListScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(
               title,
-              style: getQuicksandSemiBold(),
+              style: myTextStyle.getQuicksandSemiBold(),
             ),
           ),
           body: todos.isNotEmpty
-              ? ListView.builder(
-                  itemCount: todos.length,
-                  itemBuilder: (context, i) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: Checkbox(
-                            value: todos[i].isCompleted,
-                            onChanged: (value) {
-                              context.read<TodoCubit>().toggleTodoStatus(i, value!);
-                            },
-                          ),
-                          title: Text(
-                            todos[i].title,
-                            style: getQuicksandMedium(),
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              context.read<TodoCubit>().deleteTodo(i);
-                            },
-                          ),
-                        ),
-                        const Divider()
-                      ],
-                    );
-                  },
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: todos.length,
+                        itemBuilder: (context, i) {
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Checkbox(
+                                  value: todos[i].isCompleted,
+                                  onChanged: (value) {
+                                    context.read<TodoCubit>().toggleTodoStatus(i, value!);
+                                  },
+                                ),
+                                title: Text(
+                                  todos[i].title,
+                                  style: myTextStyle.getQuicksandMedium(),
+                                ),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    context.read<TodoCubit>().deleteTodo(i);
+                                  },
+                                ),
+                              ),
+                              const Divider()
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 )
               : Center(
                   child: Text(
                     'Nothing to display',
-                    style: getQuicksandSemiBold(),
+                    style: myTextStyle.getQuicksandSemiBold(),
                   ),
                 ),
           floatingActionButton: FloatingActionButton(
@@ -95,16 +104,16 @@ class TodoListScreen extends StatelessWidget {
         return AlertDialog(
           title: Text(
             'Add Todo',
-            style: getQuicksandMedium(),
+            style: myTextStyle.getQuicksandMedium(),
           ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextField(
               controller: myController,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 hintText: 'Enter your todo',
-                hintStyle: getQuicksandRegular(),
+                hintStyle: myTextStyle.getQuicksandRegular(),
               ),
             ),
           ),
@@ -115,14 +124,14 @@ class TodoListScreen extends StatelessWidget {
               ),
               child: Text(
                 'Add',
-                style: getQuicksandMedium(),
+                style: myTextStyle.getQuicksandMedium(),
               ),
               onPressed: () {
                 String enteredText = myController.text;
                 if (enteredText != "") {
                   todo = Todo(id: uuid.v4().toString(), title: enteredText, isCompleted: false);
-                  Navigator.of(context).pop();
                 }
+                context.pop();
               },
             ),
           ],

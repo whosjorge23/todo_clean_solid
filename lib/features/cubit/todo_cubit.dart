@@ -25,7 +25,6 @@ class TodoCubit extends Cubit<TodoState> {
     List<Todo> todoList = List.from(state.todos);
     final updatedTodo = todoList.elementAt(index).copyWith(isCompleted: isChecked);
     todoList[index] = updatedTodo;
-
     emit(state.copyWith(todos: todoList));
   }
 
