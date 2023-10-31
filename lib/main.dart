@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_clean_solid/bootstrap.dart';
 import 'package:todo_clean_solid/features/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list_screen.dart';
 
-void main() {
+void main() async {
+  await bootstrap();
   runApp(const MyApp());
 }
 
