@@ -23,6 +23,7 @@ mixin _$Todo {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
+  TodoPriority get priority => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $TodoCopyWith<$Res> {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) then) =
       _$TodoCopyWithImpl<$Res, Todo>;
   @useResult
-  $Res call({String id, String title, bool isCompleted});
+  $Res call({String id, String title, bool isCompleted, TodoPriority priority});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? id = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? priority = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -67,6 +69,10 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as TodoPriority,
     ) as $Val);
   }
 }
@@ -78,7 +84,7 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       __$$TodoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, bool isCompleted});
+  $Res call({String id, String title, bool isCompleted, TodoPriority priority});
 }
 
 /// @nodoc
@@ -94,6 +100,7 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? priority = null,
   }) {
     return _then(_$TodoImpl(
       id: null == id
@@ -108,6 +115,10 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as TodoPriority,
     ));
   }
 }
@@ -116,7 +127,10 @@ class __$$TodoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TodoImpl implements _Todo {
   const _$TodoImpl(
-      {required this.id, required this.title, required this.isCompleted});
+      {required this.id,
+      required this.title,
+      required this.isCompleted,
+      required this.priority});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoImplFromJson(json);
@@ -127,10 +141,12 @@ class _$TodoImpl implements _Todo {
   final String title;
   @override
   final bool isCompleted;
+  @override
+  final TodoPriority priority;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, isCompleted: $isCompleted)';
+    return 'Todo(id: $id, title: $title, isCompleted: $isCompleted, priority: $priority)';
   }
 
   @override
@@ -141,12 +157,15 @@ class _$TodoImpl implements _Todo {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+                other.isCompleted == isCompleted) &&
+            (identical(other.priority, priority) ||
+                other.priority == priority));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, isCompleted);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, isCompleted, priority);
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +185,8 @@ abstract class _Todo implements Todo {
   const factory _Todo(
       {required final String id,
       required final String title,
-      required final bool isCompleted}) = _$TodoImpl;
+      required final bool isCompleted,
+      required final TodoPriority priority}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
@@ -176,6 +196,8 @@ abstract class _Todo implements Todo {
   String get title;
   @override
   bool get isCompleted;
+  @override
+  TodoPriority get priority;
   @override
   @JsonKey(ignore: true)
   _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>

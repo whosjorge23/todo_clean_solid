@@ -10,6 +10,7 @@ _$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool,
+      priority: $enumDecode(_$TodoPriorityEnumMap, json['priority']),
     );
 
 Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
@@ -17,4 +18,12 @@ Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
       'id': instance.id,
       'title': instance.title,
       'isCompleted': instance.isCompleted,
+      'priority': _$TodoPriorityEnumMap[instance.priority]!,
     };
+
+const _$TodoPriorityEnumMap = {
+  TodoPriority.low: 'low',
+  TodoPriority.medium: 'medium',
+  TodoPriority.high: 'high',
+  TodoPriority.maximum: 'maximum',
+};
