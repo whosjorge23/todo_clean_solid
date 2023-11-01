@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/text_style.dart';
+import 'package:todo_clean_solid/widgets/priority_dropdown.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatelessWidget {
@@ -49,7 +50,9 @@ class TodoListScreen extends StatelessWidget {
                                 ),
                                 title: Text(
                                   todos[i].title,
-                                  style: myTextStyle.getQuicksandMedium(),
+                                  style: myTextStyle
+                                      .getQuicksandMedium()
+                                      .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
                                 ),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.close),
@@ -97,6 +100,7 @@ class TodoListScreen extends StatelessWidget {
 
   Future<Todo?> _dialogBuilder(BuildContext context) async {
     myController.text = "";
+    var selectedPriorityTodo = TodoPriority.low;
     late Todo todo;
     await showDialog<void>(
       context: context,
@@ -108,16 +112,31 @@ class TodoListScreen extends StatelessWidget {
           ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: TextField(
-              controller: myController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: 'Enter your todo',
-                hintStyle: myTextStyle.getQuicksandRegular(),
+            child: Container(
+              height: 70,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: myController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: 'Enter your todo',
+                      hintStyle: myTextStyle.getQuicksandRegular(),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           actions: <Widget>[
+            PriorityDropdown(
+              onChanged: (TodoPriority? selectedPriority) {
+                // Handle the selected priority here
+                if (selectedPriority != null) {
+                  selectedPriorityTodo = selectedPriority;
+                }
+              },
+            ),
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
@@ -129,7 +148,8 @@ class TodoListScreen extends StatelessWidget {
               onPressed: () {
                 String enteredText = myController.text;
                 if (enteredText != "") {
-                  todo = Todo(id: uuid.v4().toString(), title: enteredText, isCompleted: false);
+                  todo = Todo(
+                      id: uuid.v4().toString(), title: enteredText, isCompleted: false, priority: selectedPriorityTodo);
                 }
                 context.pop();
               },
