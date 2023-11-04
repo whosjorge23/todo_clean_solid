@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_clean_solid/features/cubit/todo_cubit.dart';
+import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 
 part 'todo.freezed.dart';
 
