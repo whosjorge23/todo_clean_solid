@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_clean_solid/bootstrap.dart';
+import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/settings/settings_screen.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/todo_list_screen.dart';
 
 void main() async {
   await bootstrap();
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (_) => SettingsCubit(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,33 +20,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        useMaterial3: true,
-      ),
-      themeMode: ThemeMode.system,
-      routerConfig: GoRouter(
-        routes: [
-          GoRoute(
-            path: '/',
-            pageBuilder: (context, state) => MaterialPage(
-              child: BlocProvider<TodoCubit>(
-                create: (context) => TodoCubit(),
-                child: TodoListScreen(
-                  title: 'Flutter Todo Clean Solid',
+    return BlocBuilder<SettingsCubit, ThemeMode>(
+      builder: (context, themeMode) {
+        return MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            brightness: Brightness.light,
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            useMaterial3: true,
+          ),
+          themeMode: themeMode,
+          routerConfig: GoRouter(
+            routes: [
+              GoRoute(
+                path: '/',
+                pageBuilder: (context, state) => MaterialPage(
+                  child: BlocProvider<TodoCubit>(
+                    create: (context) => TodoCubit(),
+                    child: TodoListScreen(
+                      title: 'Flutter Todo Clean Solid',
+                    ),
+                  ),
                 ),
               ),
-            ),
+              GoRoute(
+                path: '/settings',
+                pageBuilder: (context, state) => const MaterialPage(
+                  child: SettingsScreen(),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

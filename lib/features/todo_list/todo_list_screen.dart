@@ -29,6 +29,13 @@ class TodoListScreen extends StatelessWidget {
               title,
               style: myTextStyle.getQuicksandSemiBold(),
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    context.push('/settings');
+                  },
+                  icon: Icon(Icons.settings))
+            ],
           ),
           body: todos.isNotEmpty
               ? SingleChildScrollView(
