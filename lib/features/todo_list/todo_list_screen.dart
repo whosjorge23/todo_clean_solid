@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_clean_solid/features/cubit/todo_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/text_style.dart';
