@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_clean_solid/extension/text_style.dart';
@@ -30,10 +31,21 @@ class SettingsScreen extends StatelessWidget {
                   'Change ThemeMode:',
                   style: myTextStyle.getQuicksandSemiBold().copyWith(fontSize: 16),
                 ),
-                Switch(
-                  value: settingsCubit.state == ThemeMode.dark,
-                  onChanged: (isDarkMode) {
-                    settingsCubit.toggleTheme();
+                // Switch(
+                //   value: settingsCubit.state == ThemeMode.dark ? true : false,
+                //   onChanged: (isDarkMode) {
+                //     settingsCubit.toggleTheme();
+                //   },
+                // ),
+                CupertinoSlidingSegmentedControl<ThemeMode>(
+                  children: const {
+                    ThemeMode.system: Text('📱'),
+                    ThemeMode.light: Text('🌞️'),
+                    ThemeMode.dark: Text('🌕'),
+                  },
+                  groupValue: settingsCubit.state,
+                  onValueChanged: (themeMode) {
+                    settingsCubit.toggleTheme(themeMode!);
                   },
                 ),
               ],
