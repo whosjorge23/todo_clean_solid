@@ -11,13 +11,12 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsCubit = context.watch<SettingsCubit>();
-    const myTextStyle = TextStyle();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           'Settings',
-          style: myTextStyle.getQuicksandSemiBold(),
+          style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
         ),
       ),
       body: Padding(
@@ -29,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   'Change ThemeMode:',
-                  style: myTextStyle.getQuicksandSemiBold().copyWith(fontSize: 16),
+                  style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
                 ),
                 // Switch(
                 //   value: settingsCubit.state == ThemeMode.dark ? true : false,

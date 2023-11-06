@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_clean_solid/extension/text_style.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
+import 'package:todo_clean_solid/shared_export.dart';
 
 class PriorityDropdown extends StatefulWidget {
   const PriorityDropdown({super.key, required this.onChanged});
@@ -13,7 +14,6 @@ class PriorityDropdown extends StatefulWidget {
 
 class _PriorityDropdownState extends State<PriorityDropdown> {
   TodoPriority? _selectedPriority = TodoPriority.low;
-  final myTextStyle = const TextStyle();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,8 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
           value: priority,
           child: Text(
             priority.toString().split('.').last,
-            style: myTextStyle.getQuicksandRegular().copyWith(color: getColorTodoPriority(priority)),
+            style:
+                quickSandTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: getColorTodoPriority(priority)),
           ),
         );
       }).toList(),

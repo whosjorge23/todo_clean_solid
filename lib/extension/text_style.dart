@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 
-extension QuicksandExt on TextStyle {
-  TextStyle getQuicksandRegular() {
-    return const TextStyle(
-      fontFamily: 'Quicksand',
-      fontWeight: FontWeight.w400,
-    );
-  }
+enum MyFontWeight {
+  regular,
+  bold,
+  semiBold,
+  medium,
+  light,
+}
 
-  TextStyle getQuicksandBold() {
-    return const TextStyle(
-      fontFamily: 'Quicksand',
-      fontWeight: FontWeight.w700,
-    );
-  }
+class QuicksandTextStyle {
+  TextStyle getQuicksand(MyFontWeight fontWeight) {
+    FontWeight? selectedFontWeight;
 
-  TextStyle getQuicksandSemiBold() {
-    return const TextStyle(
-      fontFamily: 'Quicksand',
-      fontWeight: FontWeight.w600,
-    );
-  }
+    switch (fontWeight) {
+      case MyFontWeight.regular:
+        selectedFontWeight = FontWeight.w400;
+        break;
+      case MyFontWeight.bold:
+        selectedFontWeight = FontWeight.w700;
+        break;
+      case MyFontWeight.semiBold:
+        selectedFontWeight = FontWeight.w600;
+        break;
+      case MyFontWeight.medium:
+        selectedFontWeight = FontWeight.w500;
+        break;
+      case MyFontWeight.light:
+        selectedFontWeight = FontWeight.w300;
+        break;
+    }
 
-  TextStyle getQuicksandMedium() {
-    return const TextStyle(
+    return TextStyle(
       fontFamily: 'Quicksand',
-      fontWeight: FontWeight.w500,
-    );
-  }
-
-  TextStyle getQuicksandLight() {
-    return const TextStyle(
-      fontFamily: 'Quicksand',
-      fontWeight: FontWeight.w300,
+      fontWeight: selectedFontWeight,
     );
   }
 }
