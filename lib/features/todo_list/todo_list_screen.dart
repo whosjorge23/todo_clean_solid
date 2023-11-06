@@ -9,13 +9,14 @@ import 'package:todo_clean_solid/extension/text_style.dart';
 import 'package:todo_clean_solid/widgets/priority_dropdown.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../shared_export.dart';
+
 class TodoListScreen extends StatelessWidget {
   TodoListScreen({Key? key, required this.title}) : super(key: key);
   final String title;
   Random random = Random();
   final myController = TextEditingController();
   var uuid = const Uuid();
-  final myTextStyle = const TextStyle();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class TodoListScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(
               title,
-              style: myTextStyle.getQuicksandSemiBold(),
+              style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
             ),
             actions: [
               IconButton(
@@ -57,8 +58,8 @@ class TodoListScreen extends StatelessWidget {
                                 ),
                                 title: Text(
                                   todos[i].title,
-                                  style: myTextStyle
-                                      .getQuicksandMedium()
+                                  style: quickSandTextStyle
+                                      .getQuicksand(MyFontWeight.medium)
                                       .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
                                 ),
                                 trailing: IconButton(
@@ -79,7 +80,7 @@ class TodoListScreen extends StatelessWidget {
               : Center(
                   child: Text(
                     'Nothing to display',
-                    style: myTextStyle.getQuicksandSemiBold(),
+                    style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
                   ),
                 ),
           floatingActionButton: FloatingActionButton(
@@ -115,7 +116,7 @@ class TodoListScreen extends StatelessWidget {
         return AlertDialog(
           title: Text(
             'Add Todo',
-            style: myTextStyle.getQuicksandMedium(),
+            style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
           ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -128,7 +129,7 @@ class TodoListScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       hintText: 'Enter your todo',
-                      hintStyle: myTextStyle.getQuicksandRegular(),
+                      hintStyle: quickSandTextStyle.getQuicksand(MyFontWeight.regular),
                     ),
                   ),
                 ],
@@ -150,7 +151,7 @@ class TodoListScreen extends StatelessWidget {
               ),
               child: Text(
                 'Add',
-                style: myTextStyle.getQuicksandMedium(),
+                style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
               ),
               onPressed: () {
                 String enteredText = myController.text;

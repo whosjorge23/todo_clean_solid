@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 
+import 'extension/text_style.dart';
+
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   _registerSingletons();
@@ -11,4 +13,5 @@ Future<void> bootstrap() async {
 void _registerSingletons() {
   // Shared Preferences
   GetIt.I.registerLazySingleton<SharedPreferenceService>(() => SharedPreferenceService());
+  GetIt.I.registerLazySingleton<QuicksandTextStyle>(() => QuicksandTextStyle());
 }
