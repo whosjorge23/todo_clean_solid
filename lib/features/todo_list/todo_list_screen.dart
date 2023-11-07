@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
@@ -56,11 +57,22 @@ class TodoListScreen extends StatelessWidget {
                                     context.read<TodoCubit>().toggleTodoStatus(i, value!);
                                   },
                                 ),
-                                title: Text(
-                                  todos[i].title,
-                                  style: quickSandTextStyle
-                                      .getQuicksand(MyFontWeight.medium)
-                                      .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      todos[i].title,
+                                      style: quickSandTextStyle
+                                          .getQuicksand(MyFontWeight.medium)
+                                          .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
+                                    ),
+                                    Text(
+                                      todos[i].dateTimestamp,
+                                      style: quickSandTextStyle
+                                          .getQuicksand(MyFontWeight.light)
+                                          .copyWith(color: Colors.grey),
+                                    ),
+                                  ],
                                 ),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.close),
@@ -156,8 +168,16 @@ class TodoListScreen extends StatelessWidget {
               onPressed: () {
                 String enteredText = myController.text;
                 if (enteredText != "") {
+                  var now = DateTime.now();
+                  var formatter = DateFormat('dd-MM-yyyy hh:mm');
+                  String formattedDate = formatter.format(now);
                   todo = Todo(
-                      id: uuid.v4().toString(), title: enteredText, isCompleted: false, priority: selectedPriorityTodo);
+                    id: uuid.v4().toString(),
+                    title: enteredText,
+                    isCompleted: false,
+                    priority: selectedPriorityTodo,
+                    dateTimestamp: formattedDate,
+                  );
                 }
                 context.pop();
               },

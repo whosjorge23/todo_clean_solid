@@ -11,6 +11,7 @@ class Todo with _$Todo {
     required String id,
     required String title,
     required bool isCompleted,
+    required String dateTimestamp,
     required TodoPriority priority,
   }) = _Todo;
 
