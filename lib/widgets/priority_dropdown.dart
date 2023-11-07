@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_clean_solid/extension/text_style.dart';
+import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 

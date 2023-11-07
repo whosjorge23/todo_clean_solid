@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 
-import 'extension/text_style.dart';
+import 'extension/quicksand_text_style.dart';
 
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();

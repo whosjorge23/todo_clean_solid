@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_clean_solid/extension/text_style.dart';
+import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
