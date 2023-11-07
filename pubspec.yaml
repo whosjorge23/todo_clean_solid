@@ -45,6 +45,7 @@ dependencies:
   dio: ^5.3.2
   uuid: ^4.1.0
   shared_preferences:
+  intl:
 
 dev_dependencies:
   flutter_test:
