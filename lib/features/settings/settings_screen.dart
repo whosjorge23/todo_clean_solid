@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/shared_export.dart';
@@ -24,6 +25,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -42,13 +44,29 @@ class SettingsScreen extends StatelessWidget {
                     ThemeMode.light: Text('🌞️'),
                     ThemeMode.dark: Text('🌕'),
                   },
-                  groupValue: settingsCubit.state,
+                  groupValue: settingsCubit.state.themeMode,
                   onValueChanged: (themeMode) {
                     settingsCubit.toggleTheme(themeMode!);
                   },
                 ),
               ],
             ),
+            Gap(10),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Enable Creation Dates:',
+                  style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
+                ),
+                CupertinoSwitch(
+                    value: settingsCubit.state.isDateTimeEnabled!,
+                    onChanged: (value) {
+                      settingsCubit.toggleDateTime();
+                    }),
+              ],
+            )
           ],
         ),
       ),

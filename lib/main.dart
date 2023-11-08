@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, ThemeMode>(
-      builder: (context, themeMode) {
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
         return MaterialApp.router(
           title: 'Flutter Demo',
           theme: ThemeData(
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             useMaterial3: true,
           ),
-          themeMode: themeMode,
+          themeMode: state.themeMode,
           routerConfig: GoRouter(
             routes: [
               GoRoute(

@@ -1,8 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SettingsCubit extends Cubit<ThemeMode> {
-  SettingsCubit() : super(ThemeMode.system); // starts with system theme
+part 'settings_state.dart';
+
+part 'settings_cubit.freezed.dart';
+
+class SettingsCubit extends Cubit<SettingsState> {
+  SettingsCubit() : super(const SettingsState.initial()) {
+    loadSettings();
+  }
+
+  Future<void> loadSettings() async {
+    emit(state.copyWith(themeMode: ThemeMode.system, isDateTimeEnabled: false));
+  }
 
   // void toggleTheme() {
   //   if (state == ThemeMode.dark) {
@@ -17,11 +28,17 @@ class SettingsCubit extends Cubit<ThemeMode> {
 
   void toggleTheme(ThemeMode themeMode) {
     if (themeMode == ThemeMode.dark) {
-      emit(ThemeMode.dark);
+      emit(state.copyWith(themeMode: ThemeMode.dark));
     } else if (themeMode == ThemeMode.light) {
-      emit(ThemeMode.light);
+      emit(state.copyWith(themeMode: ThemeMode.light));
     } else {
-      emit(ThemeMode.system);
+      emit(state.copyWith(themeMode: ThemeMode.system));
+    }
+  }
+
+  void toggleDateTime() {
+    if (state.isDateTimeEnabled != null) {
+      emit(state.copyWith(isDateTimeEnabled: !state.isDateTimeEnabled!));
     }
   }
 }
