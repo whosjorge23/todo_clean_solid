@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
@@ -66,11 +67,20 @@ class TodoListScreen extends StatelessWidget {
                                           .getQuicksand(MyFontWeight.medium)
                                           .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
                                     ),
-                                    Text(
-                                      todos[i].dateTimestamp,
-                                      style: quickSandTextStyle
-                                          .getQuicksand(MyFontWeight.light)
-                                          .copyWith(color: Colors.grey),
+                                    BlocConsumer<SettingsCubit, SettingsState>(
+                                      listener: (context, state) {
+                                        // TODO: implement listener
+                                      },
+                                      builder: (context, state) {
+                                        return state.isDateTimeEnabled
+                                            ? Text(
+                                                todos[i].dateTimestamp,
+                                                style: quickSandTextStyle
+                                                    .getQuicksand(MyFontWeight.light)
+                                                    .copyWith(color: Colors.grey),
+                                              )
+                                            : const SizedBox.shrink();
+                                      },
                                     ),
                                   ],
                                 ),

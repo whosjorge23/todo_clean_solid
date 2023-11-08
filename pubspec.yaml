@@ -46,6 +46,7 @@ dependencies:
   uuid: ^4.1.0
   shared_preferences:
   intl:
+  gap:
 
 dev_dependencies:
   flutter_test:
