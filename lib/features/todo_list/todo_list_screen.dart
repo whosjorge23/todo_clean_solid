@@ -22,17 +22,12 @@ class TodoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todosCubitState = context
-        .watch<TodoCubit>()
-        .state;
+    final todosCubitState = context.watch<TodoCubit>().state;
     return todosCubitState.when(
       initial: (todos) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme
-                .of(context)
-                .colorScheme
-                .inversePrimary,
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(
               title,
               style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
@@ -47,68 +42,67 @@ class TodoListScreen extends StatelessWidget {
           ),
           body: todos.isNotEmpty
               ? SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: todos.length,
-                  itemBuilder: (context, i) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: Checkbox(
-                            value: todos[i].isCompleted,
-                            onChanged: (value) {
-                              context.read<TodoCubit>().toggleTodoStatus(i, value!);
-                            },
-                          ),
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: todos.length,
+                        itemBuilder: (context, i) {
+                          return Column(
                             children: [
-                              Text(
-                                todos[i].title,
-                                style: quickSandTextStyle
-                                    .getQuicksand(MyFontWeight.medium)
-                                    .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
-                              ),
-                              BlocBuilder<SettingsCubit, SettingsState>(
-                                builder: (context, state) {
-                                  return Visibility(
-                                    visible: state.isDateTimeEnabled,
-                                    child: Text(
-                                      todos[i].dateTimestamp,
+                              ListTile(
+                                leading: Checkbox(
+                                  value: todos[i].isCompleted,
+                                  onChanged: (value) {
+                                    context.read<TodoCubit>().toggleTodoStatus(i, value!);
+                                  },
+                                ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      todos[i].title,
                                       style: quickSandTextStyle
-                                          .getQuicksand(MyFontWeight.light)
-                                          .copyWith(color: Colors.grey),
+                                          .getQuicksand(MyFontWeight.medium)
+                                          .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
                                     ),
-                                  );
-                                },
-                              )
-                                  : const SizedBox.shrink(),
+                                    BlocBuilder<SettingsCubit, SettingsState>(
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: state.isDateTimeEnabled,
+                                          child: Text(
+                                            todos[i].dateTimestamp,
+                                            style: quickSandTextStyle
+                                                .getQuicksand(MyFontWeight.light)
+                                                .copyWith(color: Colors.grey),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                ),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    context.read<TodoCubit>().deleteTodo(i);
+                                  },
+                                ),
+                              ),
+                              const Divider()
                             ],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              context.read<TodoCubit>().deleteTodo(i);
-                            },
-                          ),
-                        ),
-                        const Divider()
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          )
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )
               : Center(
-            child: Text(
-              'Nothing to display',
-              style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
-            ),
-          ),
+                  child: Text(
+                    'Nothing to display',
+                    style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
+                  ),
+                ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               final todo = await _dialogBuilder(context);
@@ -173,10 +167,7 @@ class TodoListScreen extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                textStyle: Theme
-                    .of(context)
-                    .textTheme
-                    .labelLarge,
+                textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: Text(
                 'Add',
