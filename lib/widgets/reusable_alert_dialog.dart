@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
@@ -38,7 +39,7 @@ class ReusableAlertDialog extends StatelessWidget {
             if (onCancel != null) {
               onCancel!();
             } else {
-              Navigator.of(context).pop();
+              context.pop();
             }
           },
         ),
@@ -51,7 +52,7 @@ class ReusableAlertDialog extends StatelessWidget {
             if (onConfirm != null) {
               onConfirm!();
             } else {
-              Navigator.of(context).pop();
+              context.pop();
             }
           },
         ),
