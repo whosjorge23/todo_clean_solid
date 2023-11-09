@@ -8,7 +8,7 @@ import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
-import 'package:todo_clean_solid/widgets/custom_dialog.dart';
+import 'package:todo_clean_solid/widgets/reusable_alert_dialog.dart';
 import 'package:todo_clean_solid/widgets/priority_dropdown.dart';
 import 'package:uuid/uuid.dart';
 
@@ -86,10 +86,10 @@ class TodoListScreen extends StatelessWidget {
                                 trailing: IconButton(
                                   icon: const Icon(Icons.close),
                                   onPressed: () {
-                                    showReusableAlertDialog(
-                                      context: context,
+                                    ReusableAlertDialog.show(
+                                      context,
                                       title: 'Delete Todo',
-                                      content: 'Are you sure?',
+                                      content: 'Are you sure you want to proceed?',
                                       confirmButtonText: 'YES',
                                       cancelButtonText: 'NO',
                                       onConfirm: () {
