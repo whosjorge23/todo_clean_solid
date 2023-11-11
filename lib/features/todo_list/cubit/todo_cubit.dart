@@ -60,13 +60,12 @@ class TodoCubit extends Cubit<TodoState> {
 
   Color getColorForTodoPriority(Todo todo) {
     final priorityColors = {
-      TodoPriority.low: Colors.green,
-      TodoPriority.medium: Colors.amber,
-      TodoPriority.high: Colors.orange,
-      TodoPriority.maximum: Colors.red,
+      TodoPriority.low: appColors.green,
+      TodoPriority.medium: appColors.yellow,
+      TodoPriority.high: appColors.orange,
+      TodoPriority.maximum: appColors.red,
     };
     // Get the color based on the priority of the Todo
     return priorityColors[todo.priority] ?? Colors.grey;
   }
-
 }

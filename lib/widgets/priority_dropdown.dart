@@ -42,16 +42,16 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
     Color todoPriorityColor = Colors.grey;
     switch (todoPriority) {
       case TodoPriority.low:
-        todoPriorityColor = Colors.green;
+        todoPriorityColor = appColors.green;
         break;
       case TodoPriority.medium:
-        todoPriorityColor = Colors.amber;
+        todoPriorityColor = appColors.yellow;
         break;
       case TodoPriority.high:
-        todoPriorityColor = Colors.orange;
+        todoPriorityColor = appColors.orange;
         break;
       case TodoPriority.maximum:
-        todoPriorityColor = Colors.red;
+        todoPriorityColor = appColors.red;
         break;
     }
     return todoPriorityColor;
