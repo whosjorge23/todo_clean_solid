@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_clean_solid/bootstrap.dart';
+import 'package:todo_clean_solid/features/loading_screen/loading_screen.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/settings/settings_screen.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
@@ -38,6 +39,12 @@ class MyApp extends StatelessWidget {
             routes: [
               GoRoute(
                 path: '/',
+                pageBuilder: (context, state) => MaterialPage(
+                  child: LoadingScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/todo_list',
                 pageBuilder: (context, state) => MaterialPage(
                   child: BlocProvider<TodoCubit>(
                     create: (context) => TodoCubit(),
