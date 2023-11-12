@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -52,55 +53,86 @@ class TodoListScreen extends StatelessWidget {
                         itemBuilder: (context, i) {
                           return Column(
                             children: [
-                              ListTile(
-                                leading: Checkbox(
-                                  value: todos[i].isCompleted,
-                                  onChanged: (value) {
-                                    context.read<TodoCubit>().toggleTodoStatus(i, value!);
-                                  },
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      todos[i].title,
-                                      style: quickSandTextStyle
-                                          .getQuicksand(MyFontWeight.medium)
-                                          .copyWith(color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
-                                    ),
-                                    BlocBuilder<SettingsCubit, SettingsState>(
-                                      builder: (context, state) {
-                                        return Visibility(
-                                          visible: state.isDateTimeEnabled,
-                                          child: Text(
-                                            todos[i].dateTimestamp,
-                                            style: quickSandTextStyle
-                                                .getQuicksand(MyFontWeight.light)
-                                                .copyWith(color: Colors.grey),
-                                          ),
+                              SwipeActionCell(
+                                key: ObjectKey(i),
+                                trailingActions: <SwipeAction>[
+                                  SwipeAction(
+
+                                      /// this is the same as iOS native
+                                      performsFirstActionWithFullSwipe: true,
+                                      icon: const Icon(
+                                        Icons.delete_forever_rounded,
+                                        color: Colors.white,
+                                      ),
+                                      onTap: (CompletionHandler handler) async {
+                                        ReusableAlertDialog.show(
+                                          context,
+                                          title: 'Delete Todo',
+                                          content: 'Are you sure you want to proceed?',
+                                          confirmButtonText: 'YES',
+                                          cancelButtonText: 'NO',
+                                          onConfirm: () {
+                                            context.read<TodoCubit>().deleteTodo(i);
+                                            handler(true); // Close the cell and indicate the action is completed
+                                            context.pop();
+                                          },
+                                          onCancel: () {
+                                            context.pop();
+                                            handler(false); // Close the cell without completing the action
+                                          },
                                         );
                                       },
-                                    )
-                                  ],
-                                ),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.close),
-                                  onPressed: () {
-                                    ReusableAlertDialog.show(
-                                      context,
-                                      title: 'Delete Todo',
-                                      content: 'Are you sure you want to proceed?',
-                                      confirmButtonText: 'YES',
-                                      cancelButtonText: 'NO',
-                                      onConfirm: () {
-                                        context.read<TodoCubit>().deleteTodo(i);
-                                        context.pop();
-                                      },
-                                      onCancel: () {
-                                        context.pop();
-                                      },
-                                    );
-                                  },
+                                      color: appColors.red),
+                                ],
+                                child: ListTile(
+                                  leading: Checkbox(
+                                    value: todos[i].isCompleted,
+                                    onChanged: (value) {
+                                      context.read<TodoCubit>().toggleTodoStatus(i, value!);
+                                    },
+                                  ),
+                                  title: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        todos[i].title,
+                                        style: quickSandTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
+                                            color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
+                                      ),
+                                      BlocBuilder<SettingsCubit, SettingsState>(
+                                        builder: (context, state) {
+                                          return Visibility(
+                                            visible: state.isDateTimeEnabled,
+                                            child: Text(
+                                              todos[i].dateTimestamp,
+                                              style: quickSandTextStyle
+                                                  .getQuicksand(MyFontWeight.light)
+                                                  .copyWith(color: Colors.grey),
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.close),
+                                    onPressed: () {
+                                      ReusableAlertDialog.show(
+                                        context,
+                                        title: 'Delete Todo',
+                                        content: 'Are you sure you want to proceed?',
+                                        confirmButtonText: 'YES',
+                                        cancelButtonText: 'NO',
+                                        onConfirm: () {
+                                          context.read<TodoCubit>().deleteTodo(i);
+                                          context.pop();
+                                        },
+                                        onCancel: () {
+                                          context.pop();
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                               const Divider()
@@ -191,7 +223,7 @@ class TodoListScreen extends StatelessWidget {
                 String enteredText = myController.text;
                 if (enteredText != "") {
                   var now = DateTime.now();
-                  var formatter = DateFormat('dd-MM-yyyy hh:mm');
+                  var formatter = DateFormat('dd-MM-yyyy hh:mm a');
                   String formattedDate = formatter.format(now);
                   todo = Todo(
                     id: uuid.v4().toString(),
