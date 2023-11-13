@@ -73,7 +73,7 @@ class TodoListScreen extends StatelessWidget {
                                           cancelButtonText: 'NO',
                                           onConfirm: () {
                                             context.read<TodoCubit>().deleteTodo(i);
-                                            handler(true); // Close the cell and indicate the action is completed
+                                            handler(false); // Close the cell and indicate the action is completed
                                             context.pop();
                                           },
                                           onCancel: () {
@@ -97,7 +97,8 @@ class TodoListScreen extends StatelessWidget {
                                       Text(
                                         todos[i].title,
                                         style: quickSandTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
-                                            color: context.read<TodoCubit>().getColorForTodoPriority(todos[i])),
+                                              color: context.read<TodoCubit>().getColorForTodoPriority(todos[i]),
+                                            ),
                                       ),
                                       BlocBuilder<SettingsCubit, SettingsState>(
                                         builder: (context, state) {
