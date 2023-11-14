@@ -58,6 +58,11 @@ class TodoCubit extends Cubit<TodoState> {
     print("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
   }
 
+  Future<List<Todo>> getTodosByCategory(String category) async {
+    List<Todo> todoList = List.from(state.todos);
+    return todoList.where((todo) => todo.category == category).toList();
+  }
+
   Color getColorForTodoPriority(Todo todo) {
     final priorityColors = {
       TodoPriority.low: appColors.green,

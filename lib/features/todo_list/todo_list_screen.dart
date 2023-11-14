@@ -187,7 +187,7 @@ class TodoListScreen extends StatelessWidget {
           ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: Container(
+            child: SizedBox(
               height: 70,
               child: Column(
                 children: [
@@ -232,6 +232,7 @@ class TodoListScreen extends StatelessWidget {
                     isCompleted: false,
                     priority: selectedPriorityTodo,
                     dateTimestamp: formattedDate,
+                    category: "",
                   );
                 }
                 context.pop();

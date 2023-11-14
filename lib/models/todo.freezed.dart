@@ -25,6 +25,7 @@ mixin _$Todo {
   bool get isCompleted => throw _privateConstructorUsedError;
   String get dateTimestamp => throw _privateConstructorUsedError;
   TodoPriority get priority => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $TodoCopyWith<$Res> {
       String title,
       bool isCompleted,
       String dateTimestamp,
-      TodoPriority priority});
+      TodoPriority priority,
+      String category});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? isCompleted = null,
     Object? dateTimestamp = null,
     Object? priority = null,
+    Object? category = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,6 +87,10 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as TodoPriority,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -100,7 +107,8 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       String title,
       bool isCompleted,
       String dateTimestamp,
-      TodoPriority priority});
+      TodoPriority priority,
+      String category});
 }
 
 /// @nodoc
@@ -118,6 +126,7 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? isCompleted = null,
     Object? dateTimestamp = null,
     Object? priority = null,
+    Object? category = null,
   }) {
     return _then(_$TodoImpl(
       id: null == id
@@ -140,6 +149,10 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as TodoPriority,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -152,7 +165,8 @@ class _$TodoImpl implements _Todo {
       required this.title,
       required this.isCompleted,
       required this.dateTimestamp,
-      required this.priority});
+      required this.priority,
+      required this.category});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoImplFromJson(json);
@@ -167,10 +181,12 @@ class _$TodoImpl implements _Todo {
   final String dateTimestamp;
   @override
   final TodoPriority priority;
+  @override
+  final String category;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, isCompleted: $isCompleted, dateTimestamp: $dateTimestamp, priority: $priority)';
+    return 'Todo(id: $id, title: $title, isCompleted: $isCompleted, dateTimestamp: $dateTimestamp, priority: $priority, category: $category)';
   }
 
   @override
@@ -185,13 +201,15 @@ class _$TodoImpl implements _Todo {
             (identical(other.dateTimestamp, dateTimestamp) ||
                 other.dateTimestamp == dateTimestamp) &&
             (identical(other.priority, priority) ||
-                other.priority == priority));
+                other.priority == priority) &&
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, isCompleted, dateTimestamp, priority);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, isCompleted, dateTimestamp, priority, category);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +231,8 @@ abstract class _Todo implements Todo {
       required final String title,
       required final bool isCompleted,
       required final String dateTimestamp,
-      required final TodoPriority priority}) = _$TodoImpl;
+      required final TodoPriority priority,
+      required final String category}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
@@ -227,6 +246,8 @@ abstract class _Todo implements Todo {
   String get dateTimestamp;
   @override
   TodoPriority get priority;
+  @override
+  String get category;
   @override
   @JsonKey(ignore: true)
   _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>
