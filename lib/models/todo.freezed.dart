@@ -25,7 +25,7 @@ mixin _$Todo {
   bool get isCompleted => throw _privateConstructorUsedError;
   String get dateTimestamp => throw _privateConstructorUsedError;
   TodoPriority get priority => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
+  TodoCategory get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $TodoCopyWith<$Res> {
       bool isCompleted,
       String dateTimestamp,
       TodoPriority priority,
-      String category});
+      TodoCategory category});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TodoCategory,
     ) as $Val);
   }
 }
@@ -108,7 +108,7 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       bool isCompleted,
       String dateTimestamp,
       TodoPriority priority,
-      String category});
+      TodoCategory category});
 }
 
 /// @nodoc
@@ -152,7 +152,7 @@ class __$$TodoImplCopyWithImpl<$Res>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TodoCategory,
     ));
   }
 }
@@ -182,7 +182,7 @@ class _$TodoImpl implements _Todo {
   @override
   final TodoPriority priority;
   @override
-  final String category;
+  final TodoCategory category;
 
   @override
   String toString() {
@@ -232,7 +232,7 @@ abstract class _Todo implements Todo {
       required final bool isCompleted,
       required final String dateTimestamp,
       required final TodoPriority priority,
-      required final String category}) = _$TodoImpl;
+      required final TodoCategory category}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
@@ -247,7 +247,7 @@ abstract class _Todo implements Todo {
   @override
   TodoPriority get priority;
   @override
-  String get category;
+  TodoCategory get category;
   @override
   @JsonKey(ignore: true)
   _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>
