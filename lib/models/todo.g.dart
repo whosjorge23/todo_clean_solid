@@ -12,7 +12,7 @@ _$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
       isCompleted: json['isCompleted'] as bool,
       dateTimestamp: json['dateTimestamp'] as String,
       priority: $enumDecode(_$TodoPriorityEnumMap, json['priority']),
-      category: json['category'] as String,
+      category: $enumDecode(_$TodoCategoryEnumMap, json['category']),
     );
 
 Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
@@ -22,12 +22,19 @@ Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
       'isCompleted': instance.isCompleted,
       'dateTimestamp': instance.dateTimestamp,
       'priority': _$TodoPriorityEnumMap[instance.priority]!,
-      'category': instance.category,
+      'category': _$TodoCategoryEnumMap[instance.category]!,
     };
 
 const _$TodoPriorityEnumMap = {
-  TodoPriority.low: 'low',
-  TodoPriority.medium: 'medium',
-  TodoPriority.high: 'high',
-  TodoPriority.maximum: 'maximum',
+  TodoPriority.Low: 'Low',
+  TodoPriority.Medium: 'Medium',
+  TodoPriority.High: 'High',
+  TodoPriority.Maximum: 'Maximum',
+};
+
+const _$TodoCategoryEnumMap = {
+  TodoCategory.All: 'All',
+  TodoCategory.Grocery: 'Grocery',
+  TodoCategory.Shopping: 'Shopping',
+  TodoCategory.Todo: 'Todo',
 };

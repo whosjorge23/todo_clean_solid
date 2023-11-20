@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
+import 'package:todo_clean_solid/constants/todo_contants.dart';
 
 part 'todo.freezed.dart';
 
@@ -13,7 +13,7 @@ class Todo with _$Todo {
     required bool isCompleted,
     required String dateTimestamp,
     required TodoPriority priority,
-    required String category,
+    required TodoCategory category,
   }) = _Todo;
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
