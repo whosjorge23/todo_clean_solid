@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_clean_solid/constants/todo_contants.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
-import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class PriorityDropdown extends StatefulWidget {
@@ -13,7 +13,7 @@ class PriorityDropdown extends StatefulWidget {
 }
 
 class _PriorityDropdownState extends State<PriorityDropdown> {
-  TodoPriority? _selectedPriority = TodoPriority.low;
+  TodoPriority? _selectedPriority = TodoPriority.Low;
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +41,16 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
   Color getColorTodoPriority(TodoPriority todoPriority) {
     Color todoPriorityColor = Colors.grey;
     switch (todoPriority) {
-      case TodoPriority.low:
+      case TodoPriority.Low:
         todoPriorityColor = appColors.green;
         break;
-      case TodoPriority.medium:
+      case TodoPriority.Medium:
         todoPriorityColor = appColors.yellow;
         break;
-      case TodoPriority.high:
+      case TodoPriority.High:
         todoPriorityColor = appColors.orange;
         break;
-      case TodoPriority.maximum:
+      case TodoPriority.Maximum:
         todoPriorityColor = appColors.red;
         break;
     }
