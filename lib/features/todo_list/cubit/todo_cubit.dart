@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:todo_clean_solid/constants/todo_contants.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 import 'package:todo_clean_solid/shared_export.dart';
@@ -10,13 +11,6 @@ import 'package:todo_clean_solid/shared_export.dart';
 part 'todo_state.dart';
 
 part 'todo_cubit.freezed.dart';
-
-enum TodoPriority {
-  low,
-  medium,
-  high,
-  maximum,
-}
 
 class TodoCubit extends Cubit<TodoState> {
   TodoCubit() : super(const TodoState.initial()) {
@@ -58,17 +52,17 @@ class TodoCubit extends Cubit<TodoState> {
     print("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
   }
 
-  Future<List<Todo>> getTodosByCategory(String category) async {
+  Future<void> getTodosByCategory(TodoCategory category) async {
     List<Todo> todoList = List.from(state.todos);
-    return todoList.where((todo) => todo.category == category).toList();
+    emit(state.copyWith(todos: todoList.where((todo) => todo.category == category).toList()));
   }
 
   Color getColorForTodoPriority(Todo todo) {
     final priorityColors = {
-      TodoPriority.low: appColors.green,
-      TodoPriority.medium: appColors.yellow,
-      TodoPriority.high: appColors.orange,
-      TodoPriority.maximum: appColors.red,
+      TodoPriority.Low: appColors.green,
+      TodoPriority.Medium: appColors.yellow,
+      TodoPriority.High: appColors.orange,
+      TodoPriority.Maximum: appColors.red,
     };
     // Get the color based on the priority of the Todo
     return priorityColors[todo.priority] ?? Colors.grey;
