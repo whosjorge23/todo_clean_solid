@@ -4,11 +4,13 @@ import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_clean_solid/constants/todo_contants.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
+import 'package:todo_clean_solid/widgets/category_dropdown.dart';
 import 'package:todo_clean_solid/widgets/reusable_alert_dialog.dart';
 import 'package:todo_clean_solid/widgets/priority_dropdown.dart';
 import 'package:uuid/uuid.dart';
@@ -36,10 +38,11 @@ class TodoListScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () {
-                    context.push('/settings');
-                  },
-                  icon: Icon(Icons.settings))
+                onPressed: () {
+                  context.push('/settings');
+                },
+                icon: const Icon(Icons.settings),
+              )
             ],
           ),
           body: todos.isNotEmpty
@@ -94,11 +97,20 @@ class TodoListScreen extends StatelessWidget {
                                   title: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        todos[i].title,
-                                        style: quickSandTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
-                                              color: context.read<TodoCubit>().getColorForTodoPriority(todos[i]),
-                                            ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            todos[i].title,
+                                            style: quickSandTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
+                                                  color: context.read<TodoCubit>().getColorForTodoPriority(todos[i]),
+                                                ),
+                                          ),
+                                          Text(
+                                            'Category: ${todos[i].category.name}',
+                                            style: quickSandTextStyle.getQuicksand(MyFontWeight.light),
+                                          ),
+                                        ],
                                       ),
                                       BlocBuilder<SettingsCubit, SettingsState>(
                                         builder: (context, state) {
@@ -175,7 +187,8 @@ class TodoListScreen extends StatelessWidget {
 
   Future<Todo?> _dialogBuilder(BuildContext context) async {
     myController.text = "";
-    var selectedPriorityTodo = TodoPriority.low;
+    var selectedPriorityTodo = TodoPriority.Low;
+    var selectedCategoryTodo = TodoCategory.All;
     late Todo todo;
     await showDialog<void>(
       context: context,
@@ -204,39 +217,70 @@ class TodoListScreen extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            PriorityDropdown(
-              onChanged: (TodoPriority? selectedPriority) {
-                // Handle the selected priority here
-                if (selectedPriority != null) {
-                  selectedPriorityTodo = selectedPriority;
-                }
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Category:',
+                  style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                ),
+                CategoryDropdown(
+                  onChanged: (TodoCategory? selectedCategory) {
+                    // Handle the selected priority here
+                    if (selectedCategory != null) {
+                      selectedCategoryTodo = selectedCategory;
+                    }
+                  },
+                ),
+              ],
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: Text(
-                'Add',
-                style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
-              ),
-              onPressed: () {
-                String enteredText = myController.text;
-                if (enteredText != "") {
-                  var now = DateTime.now();
-                  var formatter = DateFormat('dd-MM-yyyy hh:mm a');
-                  String formattedDate = formatter.format(now);
-                  todo = Todo(
-                    id: uuid.v4().toString(),
-                    title: enteredText,
-                    isCompleted: false,
-                    priority: selectedPriorityTodo,
-                    dateTimestamp: formattedDate,
-                    category: "",
-                  );
-                }
-                context.pop();
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Priority:',
+                  style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                ),
+                PriorityDropdown(
+                  onChanged: (TodoPriority? selectedPriority) {
+                    // Handle the selected priority here
+                    if (selectedPriority != null) {
+                      selectedPriorityTodo = selectedPriority;
+                    }
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: Text(
+                    'Add',
+                    style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                  ),
+                  onPressed: () {
+                    String enteredText = myController.text;
+                    if (enteredText != "") {
+                      var now = DateTime.now();
+                      var formatter = DateFormat('dd-MM-yyyy hh:mm a');
+                      String formattedDate = formatter.format(now);
+                      todo = Todo(
+                        id: uuid.v4().toString(),
+                        title: enteredText,
+                        isCompleted: false,
+                        priority: selectedPriorityTodo,
+                        dateTimestamp: formattedDate,
+                        category: selectedCategoryTodo,
+                      );
+                    }
+                    context.pop();
+                  },
+                ),
+              ],
             ),
           ],
         );
