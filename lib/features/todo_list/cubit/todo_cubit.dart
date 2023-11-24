@@ -53,8 +53,16 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   Future<void> getTodosByCategory(TodoCategory category) async {
-    List<Todo> todoList = List.from(state.todos);
-    emit(state.copyWith(todos: todoList.where((todo) => todo.category == category).toList()));
+    List<Todo> listTodo = await sharedPrefsService.getObjectsList("todos") ?? [];
+
+    List<Todo> filteredTodos;
+    if (category == TodoCategory.All) {
+      filteredTodos = listTodo;
+    } else {
+      filteredTodos = listTodo.where((todo) => todo.category == category).toList();
+    }
+
+    emit(state.copyWith(todos: filteredTodos));
   }
 
   Color getColorForTodoPriority(Todo todo) {
