@@ -11,6 +11,7 @@ import 'package:todo_clean_solid/models/todo.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/widgets/category_dropdown.dart';
+import 'package:todo_clean_solid/widgets/list_view_category.dart';
 import 'package:todo_clean_solid/widgets/reusable_alert_dialog.dart';
 import 'package:todo_clean_solid/widgets/priority_dropdown.dart';
 import 'package:uuid/uuid.dart';
@@ -34,7 +35,7 @@ class TodoListScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(
               title,
-              style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
+              style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
             ),
             actions: [
               IconButton(
@@ -45,11 +46,15 @@ class TodoListScreen extends StatelessWidget {
               )
             ],
           ),
-          body: todos.isNotEmpty
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ListView.builder(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                  child: ListViewCategory(),
+                ),
+                todos.isNotEmpty
+                    ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: todos.length,
@@ -60,9 +65,7 @@ class TodoListScreen extends StatelessWidget {
                                 key: ObjectKey(i),
                                 trailingActions: <SwipeAction>[
                                   SwipeAction(
-
-                                      /// this is the same as iOS native
-                                      performsFirstActionWithFullSwipe: true,
+                                      performsFirstActionWithFullSwipe: true, // this is the same as iOS native
                                       icon: const Icon(
                                         Icons.delete_forever_rounded,
                                         color: Colors.white,
@@ -102,13 +105,13 @@ class TodoListScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             todos[i].title,
-                                            style: quickSandTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
+                                            style: appTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
                                                   color: context.read<TodoCubit>().getColorForTodoPriority(todos[i]),
                                                 ),
                                           ),
                                           Text(
                                             'Category: ${todos[i].category.name}',
-                                            style: quickSandTextStyle.getQuicksand(MyFontWeight.light),
+                                            style: appTextStyle.getQuicksand(MyFontWeight.light),
                                           ),
                                         ],
                                       ),
@@ -118,7 +121,7 @@ class TodoListScreen extends StatelessWidget {
                                             visible: state.isDateTimeEnabled,
                                             child: Text(
                                               todos[i].dateTimestamp,
-                                              style: quickSandTextStyle
+                                              style: appTextStyle
                                                   .getQuicksand(MyFontWeight.light)
                                                   .copyWith(color: Colors.grey),
                                             ),
@@ -152,16 +155,16 @@ class TodoListScreen extends StatelessWidget {
                             ],
                           );
                         },
+                      )
+                    : Center(
+                        child: Text(
+                          'Nothing to display',
+                          style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
+                        ),
                       ),
-                    ],
-                  ),
-                )
-              : Center(
-                  child: Text(
-                    'Nothing to display',
-                    style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
-                  ),
-                ),
+              ],
+            ),
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               final todo = await _dialogBuilder(context);
@@ -196,7 +199,7 @@ class TodoListScreen extends StatelessWidget {
         return AlertDialog(
           title: Text(
             'Add Todo',
-            style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+            style: appTextStyle.getQuicksand(MyFontWeight.medium),
           ),
           content: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -209,7 +212,7 @@ class TodoListScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       hintText: 'Enter your todo',
-                      hintStyle: quickSandTextStyle.getQuicksand(MyFontWeight.regular),
+                      hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
                     ),
                   ),
                 ],
@@ -222,7 +225,7 @@ class TodoListScreen extends StatelessWidget {
               children: [
                 Text(
                   'Category:',
-                  style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                  style: appTextStyle.getQuicksand(MyFontWeight.medium),
                 ),
                 CategoryDropdown(
                   onChanged: (TodoCategory? selectedCategory) {
@@ -239,7 +242,7 @@ class TodoListScreen extends StatelessWidget {
               children: [
                 Text(
                   'Priority:',
-                  style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                  style: appTextStyle.getQuicksand(MyFontWeight.medium),
                 ),
                 PriorityDropdown(
                   onChanged: (TodoPriority? selectedPriority) {
@@ -260,7 +263,7 @@ class TodoListScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Add',
-                    style: quickSandTextStyle.getQuicksand(MyFontWeight.medium),
+                    style: appTextStyle.getQuicksand(MyFontWeight.medium),
                   ),
                   onPressed: () {
                     String enteredText = myController.text;

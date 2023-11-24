@@ -33,7 +33,7 @@ class ReusableAlertDialog extends StatelessWidget {
         TextButton(
           child: Text(
             cancelButtonText,
-            style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
+            style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
           ),
           onPressed: () {
             if (onCancel != null) {
@@ -46,7 +46,7 @@ class ReusableAlertDialog extends StatelessWidget {
         TextButton(
           child: Text(
             confirmButtonText,
-            style: quickSandTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: Colors.red),
+            style: appTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: Colors.red),
           ),
           onPressed: () {
             if (onConfirm != null) {

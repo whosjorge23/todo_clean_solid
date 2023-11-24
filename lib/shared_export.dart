@@ -5,6 +5,6 @@ import 'package:todo_clean_solid/theme/app_colors.dart';
 
 SharedPreferenceService get sharedPrefsService => GetIt.I.get<SharedPreferenceService>();
 
-QuicksandTextStyle get quickSandTextStyle => GetIt.I.get<QuicksandTextStyle>();
+QuicksandTextStyle get appTextStyle => GetIt.I.get<QuicksandTextStyle>();
 
 AppColors get appColors => GetIt.I.get<AppColors>();

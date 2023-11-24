@@ -30,7 +30,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
           value: category,
           child: Text(
             category.toString().split('.').last,
-            style: quickSandTextStyle.getQuicksand(MyFontWeight.regular),
+            style: appTextStyle.getQuicksand(MyFontWeight.regular),
           ),
         );
       }).toList(),

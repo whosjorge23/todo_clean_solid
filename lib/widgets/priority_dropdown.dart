@@ -30,8 +30,7 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
           value: priority,
           child: Text(
             priority.toString().split('.').last,
-            style:
-                quickSandTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: getColorTodoPriority(priority)),
+            style: appTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: getColorTodoPriority(priority)),
           ),
         );
       }).toList(),
