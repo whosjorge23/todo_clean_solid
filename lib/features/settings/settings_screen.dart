@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           'Settings',
-          style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold),
+          style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
         ),
       ),
       body: Padding(
@@ -30,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   'Change ThemeMode:',
-                  style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
+                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
                 ),
                 // Switch(
                 //   value: settingsCubit.state == ThemeMode.dark ? true : false,
@@ -58,7 +58,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   'Enable Creation Dates:',
-                  style: quickSandTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
+                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
                 ),
                 CupertinoSwitch(
                     value: settingsCubit.state.isDateTimeEnabled!,
