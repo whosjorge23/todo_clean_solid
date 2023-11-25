@@ -15,30 +15,31 @@ class ListViewCategory extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: TodoCategory.values.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
+        return InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             context.read<TodoCubit>().getTodosByCategory(TodoCategory.values[index]);
           },
-          child: Container(
-            padding: const EdgeInsets.all(7),
-            margin: const EdgeInsets.all(7),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-                width: 1.0,
+          child: SizedBox(
+            width: 120,
+            height: 50,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              margin: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(16),
               ),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Gap(5),
-                Text(
+              child: Center(
+                child: Text(
                   TodoCategory.values[index].name,
                   style: appTextStyle.getQuicksand(MyFontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const Gap(5),
-              ],
+              ),
             ),
           ),
         );
