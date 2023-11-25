@@ -167,6 +167,7 @@ class TodoListScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
+              context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
               final todo = await _dialogBuilder(context);
               context.read<TodoCubit>().addNewTodo(todo);
             },
