@@ -32,7 +32,7 @@ class TodoListScreen extends StatelessWidget {
       initial: (todos) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             title: Text(
               title,
               style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
@@ -166,6 +166,7 @@ class TodoListScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             onPressed: () async {
               context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
               final todo = await _dialogBuilder(context);

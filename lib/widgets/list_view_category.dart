@@ -28,7 +28,7 @@ class ListViewCategory extends StatelessWidget {
               margin: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.inversePrimary,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(16),
