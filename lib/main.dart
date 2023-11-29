@@ -10,10 +10,12 @@ import 'package:todo_clean_solid/features/todo_list/todo_list_screen.dart';
 
 void main() async {
   await bootstrap();
-  runApp(BlocProvider(
-    create: (_) => SettingsCubit(),
-    child: const MyApp(),
-  ));
+  runApp(
+    BlocProvider(
+      create: (_) => SettingsCubit(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
