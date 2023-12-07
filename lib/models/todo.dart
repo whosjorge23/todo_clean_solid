@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_clean_solid/constants/todo_contants.dart';
+import 'package:todo_clean_solid/constants/todo_constants.dart';
 
 part 'todo.freezed.dart';
 

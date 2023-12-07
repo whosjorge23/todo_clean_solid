@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_clean_solid/constants/todo_contants.dart';
+import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 import 'package:todo_clean_solid/shared_export.dart';

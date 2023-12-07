@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:todo_clean_solid/constants/todo_contants.dart';
+import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/shared_export.dart';

@@ -4,11 +4,10 @@ import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_clean_solid/constants/todo_contants.dart';
+import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/widgets/category_dropdown.dart';
 import 'package:todo_clean_solid/widgets/list_view_category.dart';
@@ -170,21 +169,12 @@ class TodoListScreen extends StatelessWidget {
             onPressed: () async {
               context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
               final todo = await _dialogBuilder(context);
+              if (!context.mounted) return;
               context.read<TodoCubit>().addNewTodo(todo);
             },
             tooltip: 'Add Todo',
             child: const Icon(Icons.add),
           ),
-          // bottomNavigationBar: Padding(
-          //   padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 30),
-          //   child: TextField(
-          //     controller: myController,
-          //     decoration: const InputDecoration(
-          //       // border: OutlineInputBorder(),
-          //       hintText: 'Enter your todo',
-          //     ),
-          //   ),
-          // ),
         );
       },
     );
