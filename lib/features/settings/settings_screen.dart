@@ -51,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(10),
+            const Gap(10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

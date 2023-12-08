@@ -46,9 +46,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> toggleDateTime() async {
-    if (state.isDateTimeEnabled != null) {
-      sharedPrefsService.setValue<bool>('isDateTimeEnable', !state.isDateTimeEnabled);
-      emit(state.copyWith(isDateTimeEnabled: !state.isDateTimeEnabled));
-    }
+    sharedPrefsService.setValue<bool>('isDateTimeEnable', !state.isDateTimeEnabled);
+    emit(state.copyWith(isDateTimeEnabled: !state.isDateTimeEnabled));
   }
 }

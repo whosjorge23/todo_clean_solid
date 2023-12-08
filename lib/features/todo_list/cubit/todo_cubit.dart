@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/models/todo.dart';
-import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 part 'todo_state.dart';
@@ -29,7 +26,7 @@ class TodoCubit extends Cubit<TodoState> {
       emit(state.copyWith(todos: todoList));
       sharedPrefsService.removeValue('todos');
       sharedPrefsService.saveObjectsList("todos", todoList);
-      print("list Todo Add: ${await sharedPrefsService.getObjectsList("todos")}");
+      debugPrint("list Todo Add: ${await sharedPrefsService.getObjectsList("todos")}");
     }
   }
 
@@ -40,7 +37,7 @@ class TodoCubit extends Cubit<TodoState> {
     emit(state.copyWith(todos: todoList));
     sharedPrefsService.removeValue('todos');
     sharedPrefsService.saveObjectsList("todos", todoList);
-    print("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
+    debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
   }
 
   Future<void> deleteTodo(int index) async {
@@ -49,7 +46,7 @@ class TodoCubit extends Cubit<TodoState> {
     emit(state.copyWith(todos: todoList));
     sharedPrefsService.removeValue('todos');
     sharedPrefsService.saveObjectsList("todos", todoList);
-    print("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
+    debugPrint("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
   }
 
   Future<void> getTodosByCategory(TodoCategory category) async {
