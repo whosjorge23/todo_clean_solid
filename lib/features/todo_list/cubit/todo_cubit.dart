@@ -30,14 +30,17 @@ class TodoCubit extends Cubit<TodoState> {
     }
   }
 
-  Future<void> toggleTodoStatus(int index, bool isChecked) async {
+  Future<void> updateTodo(int index, Todo updatedTodo) async {
     List<Todo> todoList = List.from(state.todos);
-    final updatedTodo = todoList.elementAt(index).copyWith(isCompleted: isChecked);
-    todoList[index] = updatedTodo;
-    emit(state.copyWith(todos: todoList));
-    sharedPrefsService.removeValue('todos');
-    sharedPrefsService.saveObjectsList("todos", todoList);
-    debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
+    if (index >= 0 && index < todoList.length) {
+      todoList[index] = updatedTodo;
+      emit(state.copyWith(todos: todoList));
+      sharedPrefsService.removeValue('todos');
+      sharedPrefsService.saveObjectsList("todos", todoList);
+      debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
+    } else {
+      debugPrint("Invalid index for updating Todo");
+    }
   }
 
   Future<void> deleteTodo(int index) async {
@@ -47,6 +50,16 @@ class TodoCubit extends Cubit<TodoState> {
     sharedPrefsService.removeValue('todos');
     sharedPrefsService.saveObjectsList("todos", todoList);
     debugPrint("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
+  }
+
+  Future<void> toggleTodoStatus(int index, bool isChecked) async {
+    List<Todo> todoList = List.from(state.todos);
+    final updatedTodo = todoList.elementAt(index).copyWith(isCompleted: isChecked);
+    todoList[index] = updatedTodo;
+    emit(state.copyWith(todos: todoList));
+    sharedPrefsService.removeValue('todos');
+    sharedPrefsService.saveObjectsList("todos", todoList);
+    debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
   }
 
   Future<void> getTodosByCategory(TodoCategory category) async {
