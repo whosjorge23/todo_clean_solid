@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -48,6 +49,7 @@ class TodoListScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
+                const Gap(10),
                 const SizedBox(
                   height: 50,
                   child: ListViewCategory(),
