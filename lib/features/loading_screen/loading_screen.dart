@@ -12,6 +12,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 1), () {
+      if (!context.mounted) return;
       context.go('/todo_list');
     });
   }
