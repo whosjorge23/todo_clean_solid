@@ -72,6 +72,7 @@ class TodoListScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     onTap: (CompletionHandler handler) async {
+                                      context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
                                       final updatedTodo = await _showEditTodoDialog(context, todos[i]);
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
