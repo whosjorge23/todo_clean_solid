@@ -373,6 +373,7 @@ class TodoListScreen extends StatelessWidget {
                             style: appTextStyle.getQuicksand(MyFontWeight.medium),
                           ),
                           CategoryDropdown(
+                            selectedCategory: selectedCategoryTodo,
                             onChanged: (TodoCategory? selectedCategory) {
                               if (selectedCategory != null) {
                                 selectedCategoryTodo = selectedCategory;
@@ -389,6 +390,7 @@ class TodoListScreen extends StatelessWidget {
                             style: appTextStyle.getQuicksand(MyFontWeight.medium),
                           ),
                           PriorityDropdown(
+                            selectedPriority: selectedPriorityTodo,
                             onChanged: (TodoPriority? selectedPriority) {
                               if (selectedPriority != null) {
                                 selectedPriorityTodo = selectedPriority;
