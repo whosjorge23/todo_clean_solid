@@ -72,6 +72,7 @@ class TodoListScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     onTap: (CompletionHandler handler) async {
+                                      context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
                                       final updatedTodo = await _showEditTodoDialog(context, todos[i]);
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
@@ -373,6 +374,7 @@ class TodoListScreen extends StatelessWidget {
                             style: appTextStyle.getQuicksand(MyFontWeight.medium),
                           ),
                           CategoryDropdown(
+                            selectedCategory: selectedCategoryTodo,
                             onChanged: (TodoCategory? selectedCategory) {
                               if (selectedCategory != null) {
                                 selectedCategoryTodo = selectedCategory;
@@ -389,6 +391,7 @@ class TodoListScreen extends StatelessWidget {
                             style: appTextStyle.getQuicksand(MyFontWeight.medium),
                           ),
                           PriorityDropdown(
+                            selectedPriority: selectedPriorityTodo,
                             onChanged: (TodoPriority? selectedPriority) {
                               if (selectedPriority != null) {
                                 selectedPriorityTodo = selectedPriority;

@@ -4,24 +4,25 @@ import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class PriorityDropdown extends StatefulWidget {
-  const PriorityDropdown({super.key, required this.onChanged});
+  PriorityDropdown({super.key, required this.onChanged, this.selectedPriority = TodoPriority.Low});
 
   final ValueChanged<TodoPriority?>? onChanged;
+  late TodoPriority? selectedPriority;
 
   @override
   State<PriorityDropdown> createState() => _PriorityDropdownState();
 }
 
 class _PriorityDropdownState extends State<PriorityDropdown> {
-  TodoPriority? _selectedPriority = TodoPriority.Low;
-
   @override
   Widget build(BuildContext context) {
     return DropdownButton<TodoPriority?>(
-      value: _selectedPriority,
+      value: widget.selectedPriority,
       onChanged: (TodoPriority? newValue) {
         setState(() {
-          _selectedPriority = newValue;
+          if (widget.selectedPriority != null) {
+            widget.selectedPriority = newValue;
+          }
         });
         widget.onChanged?.call(newValue);
       },

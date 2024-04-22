@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
                   child: BlocProvider<TodoCubit>(
                     create: (context) => TodoCubit(),
                     child: TodoListScreen(
-                      title: 'Flutter Todo Clean Solid',
+                      title: 'Clean Todo',
                     ),
                   ),
                 ),

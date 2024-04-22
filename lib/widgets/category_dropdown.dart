@@ -4,24 +4,25 @@ import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class CategoryDropdown extends StatefulWidget {
-  const CategoryDropdown({super.key, required this.onChanged});
+  CategoryDropdown({super.key, required this.onChanged, this.selectedCategory = TodoCategory.All});
 
   final ValueChanged<TodoCategory?>? onChanged;
+  late TodoCategory? selectedCategory;
 
   @override
   State<CategoryDropdown> createState() => _CategoryDropdownState();
 }
 
 class _CategoryDropdownState extends State<CategoryDropdown> {
-  TodoCategory? _selectedCategory = TodoCategory.All;
-
   @override
   Widget build(BuildContext context) {
     return DropdownButton<TodoCategory?>(
-      value: _selectedCategory,
+      value: widget.selectedCategory,
       onChanged: (TodoCategory? newValue) {
         setState(() {
-          _selectedCategory = newValue;
+          if (widget.selectedCategory != null) {
+            widget.selectedCategory = newValue;
+          }
         });
         widget.onChanged?.call(newValue);
       },
