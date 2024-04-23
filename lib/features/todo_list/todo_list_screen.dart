@@ -198,12 +198,18 @@ class TodoListScreen extends StatelessWidget {
             children: [
               Container(
                 width: double.maxFinite,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28),
+                    topRight: Radius.circular(28),
+                  ),
+                ),
                 padding: const EdgeInsets.only(
                   left: 16,
                   top: 16,
                   bottom: 16,
                 ),
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                 child: Text(
                   "Add Todo",
                   style: appTextStyle.getQuicksand(MyFontWeight.medium),
@@ -330,13 +336,19 @@ class TodoListScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28),
+                    topRight: Radius.circular(28),
+                  ),
+                ),
                 width: double.maxFinite,
                 padding: const EdgeInsets.only(
                   left: 16,
                   top: 16,
                   bottom: 16,
                 ),
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                 child: Text(
                   "Edit Todo",
                   style: appTextStyle.getQuicksand(MyFontWeight.medium),

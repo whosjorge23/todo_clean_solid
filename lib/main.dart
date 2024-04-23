@@ -29,12 +29,12 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             brightness: Brightness.light,
-            colorScheme: const ColorScheme.light(primary: Colors.orangeAccent),
+            colorScheme: const ColorScheme.light(primary: Color(0xff114A5D)),
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            colorScheme: const ColorScheme.dark(primary: Colors.blue),
+            colorScheme: const ColorScheme.dark(primary: Color(0xff294a6e)),
             useMaterial3: true,
           ),
           themeMode: state.themeMode,
