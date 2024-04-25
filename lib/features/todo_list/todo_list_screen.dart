@@ -72,11 +72,11 @@ class TodoListScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     onTap: (CompletionHandler handler) async {
-                                      context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
                                       final updatedTodo = await _showEditTodoDialog(context, todos[i]);
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
-                                        context.read<TodoCubit>().updateTodo(i, updatedTodo);
+                                        context.read<TodoCubit>().updateTodo(todos[i].id, updatedTodo);
+                                        context.read<TodoCubit>().getTodosByCategory(updatedTodo.category);
                                       }
                                     },
                                     color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
@@ -86,7 +86,7 @@ class TodoListScreen extends StatelessWidget {
                                   leading: Checkbox(
                                     value: todos[i].isCompleted,
                                     onChanged: (value) {
-                                      context.read<TodoCubit>().toggleTodoStatus(i, value!);
+                                      context.read<TodoCubit>().toggleTodoStatus(todos[i].id, value!);
                                     },
                                   ),
                                   title: Column(
@@ -132,11 +132,11 @@ class TodoListScreen extends StatelessWidget {
                                         confirmButtonText: 'YES',
                                         cancelButtonText: 'NO',
                                         onConfirm: () {
-                                          context.read<TodoCubit>().deleteTodo(i);
-                                          context.pop();
+                                          context.read<TodoCubit>().deleteTodo(todos[i].id);
+                                          Navigator.pop(context);
                                         },
                                         onCancel: () {
-                                          context.pop();
+                                          Navigator.pop(context);
                                         },
                                       );
                                     },
@@ -160,10 +160,13 @@ class TodoListScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             onPressed: () async {
-              context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
+              // context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
               final todo = await _showAddTodoDialog(context);
-              if (!context.mounted) return;
-              context.read<TodoCubit>().addNewTodo(todo);
+              if (todo != null) {
+                if (!context.mounted) return;
+                context.read<TodoCubit>().addNewTodo(todo);
+                context.read<TodoCubit>().getTodosByCategory(todo.category);
+              }
             },
             tooltip: 'Add Todo',
             child: const Icon(Icons.add),
@@ -291,7 +294,7 @@ class TodoListScreen extends StatelessWidget {
                                 var formatter = DateFormat('dd-MM-yyyy hh:mm a');
                                 String formattedDate = formatter.format(now);
                                 todo = Todo(
-                                  id: uuid.v4().toString(),
+                                  // id: uuid.v4().toString(),
                                   title: enteredText,
                                   isCompleted: false,
                                   priority: selectedPriorityTodo,
@@ -426,12 +429,11 @@ class TodoListScreen extends StatelessWidget {
                             onPressed: () {
                               String enteredText = myController.text;
                               if (enteredText.isNotEmpty) {
-                                // Update the todo with new values
-                                todo = todo.copyWith(
-                                  title: enteredText,
-                                  priority: selectedPriorityTodo,
-                                  category: selectedCategoryTodo,
-                                );
+                                //Update the todo with new values
+                                todo.id = todo.id;
+                                todo.title = enteredText;
+                                todo.category = selectedCategoryTodo;
+                                todo.priority = selectedPriorityTodo;
                               }
                               Navigator.pop(context, todo); // Return the updated todo
                             },

@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:todo_clean_solid/bootstrap.dart';
 import 'package:todo_clean_solid/features/loading_screen/loading_screen.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/settings/settings_screen.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/todo_list_screen.dart';
+import 'package:todo_clean_solid/models/todo.dart';
 
 void main() async {
   await bootstrap();
+  final isar = await Isar.open(
+    [TodoSchema],
+    directory: (await getApplicationSupportDirectory()).path,
+  );
   runApp(
     BlocProvider(
       create: (_) => SettingsCubit(),
-      child: const MyApp(),
+      child: MyApp(isar: isar),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Isar isar; // Declare a variable to hold Isar instance
+
+  const MyApp({super.key, required this.isar});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,7 @@ class MyApp extends StatelessWidget {
                 path: '/todo_list',
                 pageBuilder: (context, state) => MaterialPage(
                   child: BlocProvider<TodoCubit>(
-                    create: (context) => TodoCubit(),
+                    create: (context) => TodoCubit(isar),
                     child: TodoListScreen(
                       title: 'Clean Todo',
                     ),

@@ -1,20 +1,26 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:isar/isar.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
-
-part 'todo.freezed.dart';
 
 part 'todo.g.dart';
 
-@freezed
-class Todo with _$Todo {
-  const factory Todo({
-    required String id,
-    required String title,
-    required bool isCompleted,
-    required String dateTimestamp,
-    required TodoPriority priority,
-    required TodoCategory category,
-  }) = _Todo;
+@Collection()
+class Todo {
+  Id id = Isar.autoIncrement; // Automatically handled by Isar
 
-  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+  late String title; // Ensure these are initialized
+  late bool isCompleted;
+  late String dateTimestamp;
+
+  @Enumerated(EnumType.name) // Consistent with how enums are defined
+  late TodoPriority priority;
+  @Enumerated(EnumType.name)
+  late TodoCategory category;
+
+  Todo({
+    required this.title,
+    required this.isCompleted,
+    required this.dateTimestamp,
+    required this.priority,
+    required this.category,
+  });
 }
