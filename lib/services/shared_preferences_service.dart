@@ -84,20 +84,20 @@ class SharedPreferenceService {
     return;
   }
 
-  Future<void> saveObjectsList(String key, List<Todo> todos) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> jsonList = todos.map((obj) => jsonEncode(obj.toJson())).toList();
-    await prefs.setStringList(key, jsonList);
-  }
-
-  Future<List<Todo>?> getObjectsList(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? jsonList = prefs.getStringList(key);
-    if (jsonList != null) {
-      return jsonList.map((jsonStr) => Todo.fromJson(jsonDecode(jsonStr))).toList();
-    }
-    return null;
-  }
+  // Future<void> saveObjectsList(String key, List<Todo> todos) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   List<String> jsonList = todos.map((obj) => jsonEncode(obj.toJson())).toList();
+  //   await prefs.setStringList(key, jsonList);
+  // }
+  //
+  // Future<List<Todo>?> getObjectsList(String key) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   List<String>? jsonList = prefs.getStringList(key);
+  //   if (jsonList != null) {
+  //     return jsonList.map((jsonStr) => Todo.fromJson(jsonDecode(jsonStr))).toList();
+  //   }
+  //   return null;
+  // }
 
   String _themeModeToString(ThemeMode themeMode) {
     // Convert ThemeMode to a string representation
