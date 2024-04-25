@@ -101,17 +101,21 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   Future<void> addNewTodo(Todo todo) async {
+    List<Todo> filteredTodos;
     await isar.writeTxn(() async {
       await isar.todos.put(todo);
     });
-    loadTodos();
+    filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+    emit(state.copyWith(todos: filteredTodos));
   }
 
   Future<void> updateTodo(int id, Todo updatedTodo) async {
+    List<Todo> filteredTodos;
     await isar.writeTxn(() async {
       await isar.todos.put(updatedTodo);
     });
-    loadTodos();
+    filteredTodos = await isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
+    emit(state.copyWith(todos: filteredTodos));
   }
 
   Future<void> deleteTodo(int id) async {
