@@ -66,7 +66,20 @@ class SettingsScreen extends StatelessWidget {
                       settingsCubit.toggleDateTime();
                     }),
               ],
-            )
+            ),
+            const Spacer(),
+            BlocConsumer<SettingsCubit, SettingsState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return Text(
+                  "Version: ${state.version}+${state.buildNumber}",
+                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
+                );
+              },
+            ),
+            const Gap(32)
           ],
         ),
       ),

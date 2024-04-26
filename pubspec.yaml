@@ -52,6 +52,7 @@ dependencies:
   isar: ^3.0.0
   isar_flutter_libs: ^3.0.0
   path_provider:
+  package_info_plus:
 
 dev_dependencies:
   flutter_test:

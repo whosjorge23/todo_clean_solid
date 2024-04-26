@@ -5,5 +5,7 @@ class SettingsState with _$SettingsState {
   const factory SettingsState.initial({
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(false) bool isDateTimeEnabled,
+    @Default("1.0") String version,
+    @Default("1") String buildNumber,
   }) = _Initial;
 }

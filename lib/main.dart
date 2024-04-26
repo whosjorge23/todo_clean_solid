@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return MaterialApp.router(
-          title: 'Flutter Demo',
+          title: 'Clean Todos',
           theme: ThemeData(
             brightness: Brightness.light,
             colorScheme: const ColorScheme.light(primary: Color(0xff114A5D)),
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
                   child: BlocProvider<TodoCubit>(
                     create: (context) => TodoCubit(isar),
                     child: TodoListScreen(
-                      title: 'Clean Todo',
+                      title: 'Clean Todos',
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 part 'settings_state.dart';
@@ -15,22 +16,12 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> loadSettings() async {
     final themeMode = await sharedPrefsService.getValue<ThemeMode>('themeMode') ?? ThemeMode.system;
     final isDateTimeEnabled = await sharedPrefsService.getValue<bool>('isDateTimeEnable') ?? false;
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
     emit(state.copyWith(
-      themeMode: themeMode,
-      isDateTimeEnabled: isDateTimeEnabled,
-    ));
+        themeMode: themeMode, isDateTimeEnabled: isDateTimeEnabled, version: version, buildNumber: buildNumber));
   }
-
-  // void toggleTheme() {
-  //   if (state == ThemeMode.dark) {
-  //     emit(ThemeMode.light);
-  //   } else if (state == ThemeMode.light) {
-  //     emit(ThemeMode.dark);
-  //   } else {
-  //     // Toggle between light and dark when system theme is used
-  //     emit(ThemeMode.dark);
-  //   }
-  // }
 
   Future<void> toggleTheme(ThemeMode themeMode) async {
     if (themeMode == ThemeMode.dark) {

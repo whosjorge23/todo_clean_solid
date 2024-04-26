@@ -1,6 +1,6 @@
 {
-     "name": "Clean Todo",
-     "short_name": "Clean Todo",
+     "name": "Clean Todos",
+     "short_name": "Clean Todos",
      "start_url": ".",
      "display": "standalone",
      "background_color": "#0175C2",
