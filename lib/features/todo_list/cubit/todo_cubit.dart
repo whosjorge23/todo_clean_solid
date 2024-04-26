@@ -10,84 +10,6 @@ part 'todo_state.dart';
 
 part 'todo_cubit.freezed.dart';
 
-// class TodoCubit extends Cubit<TodoState> {
-//   TodoCubit() : super(const TodoState.initial()) {
-//     loadTodos();
-//   }
-//
-//   Future<void> loadTodos() async {
-//     List<Todo> listTodo = await sharedPrefsService.getObjectsList("todos") ?? [];
-//     emit(state.copyWith(todos: listTodo));
-//   }
-//
-//   Future<void> addNewTodo(Todo? todo) async {
-//     List<Todo> todoList = List.from(state.todos);
-//     if (todo != null) {
-//       todoList.add(todo);
-//       emit(state.copyWith(todos: todoList));
-//       sharedPrefsService.removeValue('todos');
-//       sharedPrefsService.saveObjectsList("todos", todoList);
-//       debugPrint("list Todo Add: ${await sharedPrefsService.getObjectsList("todos")}");
-//     }
-//   }
-//
-//   Future<void> updateTodo(int index, Todo updatedTodo) async {
-//     List<Todo> todoList = List.from(state.todos);
-//     if (index >= 0 && index < todoList.length) {
-//       todoList[index] = updatedTodo;
-//       emit(state.copyWith(todos: todoList));
-//       sharedPrefsService.removeValue('todos');
-//       sharedPrefsService.saveObjectsList("todos", todoList);
-//       debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
-//     } else {
-//       debugPrint("Invalid index for updating Todo");
-//     }
-//   }
-//
-//   Future<void> deleteTodo(int index) async {
-//     List<Todo> todoList = List.from(state.todos);
-//     todoList.removeAt(index);
-//     emit(state.copyWith(todos: todoList));
-//     sharedPrefsService.removeValue('todos');
-//     sharedPrefsService.saveObjectsList("todos", todoList);
-//     debugPrint("list Todo Delete: ${await sharedPrefsService.getObjectsList("todos")}");
-//   }
-//
-//   Future<void> toggleTodoStatus(int index, bool isChecked) async {
-//     List<Todo> todoList = List.from(state.todos);
-//     final updatedTodo = todoList.elementAt(index).copyWith(isCompleted: isChecked);
-//     todoList[index] = updatedTodo;
-//     emit(state.copyWith(todos: todoList));
-//     sharedPrefsService.removeValue('todos');
-//     sharedPrefsService.saveObjectsList("todos", todoList);
-//     debugPrint("list Todo Update: ${await sharedPrefsService.getObjectsList("todos")}");
-//   }
-//
-//   Future<void> getTodosByCategory(TodoCategory category) async {
-//     List<Todo> listTodo = await sharedPrefsService.getObjectsList("todos") ?? [];
-//
-//     List<Todo> filteredTodos;
-//     if (category == TodoCategory.All) {
-//       filteredTodos = listTodo;
-//     } else {
-//       filteredTodos = listTodo.where((todo) => todo.category == category).toList();
-//     }
-//
-//     emit(state.copyWith(todos: filteredTodos));
-//   }
-//
-//   Color getColorForTodoPriority(Todo todo) {
-//     final priorityColors = {
-//       TodoPriority.Low: appColors.green,
-//       TodoPriority.Medium: appColors.yellow,
-//       TodoPriority.High: appColors.orange,
-//       TodoPriority.Maximum: appColors.red,
-//     };
-//     // Get the color based on the priority of the Todo
-//     return priorityColors[todo.priority] ?? Colors.grey;
-//   }
-// }
-
 class TodoCubit extends Cubit<TodoState> {
   final Isar isar;
 
@@ -106,7 +28,8 @@ class TodoCubit extends Cubit<TodoState> {
       await isar.todos.put(todo);
     });
     filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
-    emit(state.copyWith(todos: filteredTodos));
+
+    emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
   }
 
   Future<void> updateTodo(int id, Todo updatedTodo) async {
@@ -115,25 +38,30 @@ class TodoCubit extends Cubit<TodoState> {
       await isar.todos.put(updatedTodo);
     });
     filteredTodos = await isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
-    emit(state.copyWith(todos: filteredTodos));
+    emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: updatedTodo.category.index));
   }
 
   Future<void> deleteTodo(int id) async {
+    List<Todo> filteredTodos;
     await isar.writeTxn(() async {
+      final todo = await isar.todos.get(id);
       await isar.todos.delete(id);
+      if (todo == null) return;
+      filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+      emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
     });
-    loadTodos();
   }
 
   Future<void> toggleTodoStatus(int id, bool isChecked) async {
+    List<Todo> filteredTodos;
     await isar.writeTxn(() async {
       final todo = await isar.todos.get(id);
-      if (todo != null) {
-        todo.isCompleted = isChecked;
-        await isar.todos.put(todo);
-      }
+      if (todo == null) return;
+      todo.isCompleted = isChecked;
+      await isar.todos.put(todo);
+      filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+      emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
     });
-    loadTodos();
   }
 
   Future<void> getTodosByCategory(TodoCategory category) async {
@@ -155,5 +83,9 @@ class TodoCubit extends Cubit<TodoState> {
     };
     // Get the color based on the priority of the Todo
     return priorityColors[todo.priority] ?? Colors.grey;
+  }
+
+  Future<void> updateCategoryIndex(int index) async {
+    emit(state.copyWith(selectedCategoryIndex: index));
   }
 }

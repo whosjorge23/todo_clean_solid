@@ -10,6 +10,7 @@ import 'package:todo_clean_solid/features/settings/settings_screen.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/todo_list_screen.dart';
 import 'package:todo_clean_solid/models/todo.dart';
+import 'package:todo_clean_solid/shared_export.dart';
 
 void main() async {
   await bootstrap();
@@ -40,11 +41,13 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             colorScheme: const ColorScheme.light(primary: Color(0xff114A5D)),
             useMaterial3: true,
+            floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             colorScheme: const ColorScheme.dark(primary: Color(0xff294a6e)),
             useMaterial3: true,
+            floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
           ),
           themeMode: state.themeMode,
           routerConfig: GoRouter(

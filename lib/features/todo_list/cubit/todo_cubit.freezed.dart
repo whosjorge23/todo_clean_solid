@@ -17,19 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TodoState {
   List<Todo> get todos => throw _privateConstructorUsedError;
+  int get selectedCategoryIndex => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Todo> todos) initial,
+    required TResult Function(List<Todo> todos, int selectedCategoryIndex)
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Todo> todos)? initial,
+    TResult? Function(List<Todo> todos, int selectedCategoryIndex)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Todo> todos)? initial,
+    TResult Function(List<Todo> todos, int selectedCategoryIndex)? initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -60,7 +62,7 @@ abstract class $TodoStateCopyWith<$Res> {
   factory $TodoStateCopyWith(TodoState value, $Res Function(TodoState) then) =
       _$TodoStateCopyWithImpl<$Res, TodoState>;
   @useResult
-  $Res call({List<Todo> todos});
+  $Res call({List<Todo> todos, int selectedCategoryIndex});
 }
 
 /// @nodoc
@@ -77,12 +79,17 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
   @override
   $Res call({
     Object? todos = null,
+    Object? selectedCategoryIndex = null,
   }) {
     return _then(_value.copyWith(
       todos: null == todos
           ? _value.todos
           : todos // ignore: cast_nullable_to_non_nullable
               as List<Todo>,
+      selectedCategoryIndex: null == selectedCategoryIndex
+          ? _value.selectedCategoryIndex
+          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -95,7 +102,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Todo> todos});
+  $Res call({List<Todo> todos, int selectedCategoryIndex});
 }
 
 /// @nodoc
@@ -110,12 +117,17 @@ class __$$InitialImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? todos = null,
+    Object? selectedCategoryIndex = null,
   }) {
     return _then(_$InitialImpl(
       todos: null == todos
           ? _value._todos
           : todos // ignore: cast_nullable_to_non_nullable
               as List<Todo>,
+      selectedCategoryIndex: null == selectedCategoryIndex
+          ? _value.selectedCategoryIndex
+          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -123,7 +135,9 @@ class __$$InitialImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl({final List<Todo> todos = const []}) : _todos = todos;
+  const _$InitialImpl(
+      {final List<Todo> todos = const [], this.selectedCategoryIndex = 0})
+      : _todos = todos;
 
   final List<Todo> _todos;
   @override
@@ -135,8 +149,12 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
+  @JsonKey()
+  final int selectedCategoryIndex;
+
+  @override
   String toString() {
-    return 'TodoState.initial(todos: $todos)';
+    return 'TodoState.initial(todos: $todos, selectedCategoryIndex: $selectedCategoryIndex)';
   }
 
   @override
@@ -144,12 +162,14 @@ class _$InitialImpl implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitialImpl &&
-            const DeepCollectionEquality().equals(other._todos, _todos));
+            const DeepCollectionEquality().equals(other._todos, _todos) &&
+            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
+                other.selectedCategoryIndex == selectedCategoryIndex));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_todos));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_todos), selectedCategoryIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -160,27 +180,28 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Todo> todos) initial,
+    required TResult Function(List<Todo> todos, int selectedCategoryIndex)
+        initial,
   }) {
-    return initial(todos);
+    return initial(todos, selectedCategoryIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Todo> todos)? initial,
+    TResult? Function(List<Todo> todos, int selectedCategoryIndex)? initial,
   }) {
-    return initial?.call(todos);
+    return initial?.call(todos, selectedCategoryIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Todo> todos)? initial,
+    TResult Function(List<Todo> todos, int selectedCategoryIndex)? initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(todos);
+      return initial(todos, selectedCategoryIndex);
     }
     return orElse();
   }
@@ -215,10 +236,14 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements TodoState {
-  const factory _Initial({final List<Todo> todos}) = _$InitialImpl;
+  const factory _Initial(
+      {final List<Todo> todos,
+      final int selectedCategoryIndex}) = _$InitialImpl;
 
   @override
   List<Todo> get todos;
+  @override
+  int get selectedCategoryIndex;
   @override
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>

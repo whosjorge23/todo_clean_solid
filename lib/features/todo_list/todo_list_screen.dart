@@ -29,20 +29,23 @@ class TodoListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final todosCubitState = context.watch<TodoCubit>().state;
     return todosCubitState.when(
-      initial: (todos) {
+      initial: (todos, selectedCategoryIndex) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             title: Text(
               title,
-              style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
+              style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
             ),
             actions: [
               IconButton(
                 onPressed: () {
                   context.push('/settings');
                 },
-                icon: const Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                  color: appColors.white,
+                ),
               )
             ],
           ),
@@ -215,7 +218,7 @@ class TodoListScreen extends StatelessWidget {
                 ),
                 child: Text(
                   "Add Todo",
-                  style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
                 ),
               ),
               Padding(
@@ -285,7 +288,7 @@ class TodoListScreen extends StatelessWidget {
                             ),
                             child: Text(
                               'Add',
-                              style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                              style: appTextStyle.getQuicksand(MyFontWeight.bold),
                             ),
                             onPressed: () {
                               String enteredText = myController.text;
@@ -354,7 +357,7 @@ class TodoListScreen extends StatelessWidget {
                 ),
                 child: Text(
                   "Edit Todo",
-                  style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
                 ),
               ),
               Padding(
@@ -424,7 +427,7 @@ class TodoListScreen extends StatelessWidget {
                             ),
                             child: Text(
                               'Update',
-                              style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                              style: appTextStyle.getQuicksand(MyFontWeight.bold),
                             ),
                             onPressed: () {
                               String enteredText = myController.text;
