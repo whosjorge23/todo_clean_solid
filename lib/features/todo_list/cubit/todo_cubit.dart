@@ -28,7 +28,6 @@ class TodoCubit extends Cubit<TodoState> {
       await isar.todos.put(todo);
     });
     filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
-
     emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
   }
 
