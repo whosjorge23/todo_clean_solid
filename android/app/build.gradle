@@ -14,7 +14,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '2'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
@@ -23,8 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.westcostyle.cleantodo"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace "com.example.todo_clean_solid"
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

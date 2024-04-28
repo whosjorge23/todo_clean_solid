@@ -74,6 +74,7 @@ class TodoListScreen extends StatelessWidget {
                                       Icons.edit,
                                       color: Colors.white,
                                     ),
+                                    closeOnTap: true,
                                     onTap: (CompletionHandler handler) async {
                                       final updatedTodo = await _showEditTodoDialog(context, todos[i]);
                                       if (updatedTodo != null) {
@@ -82,6 +83,7 @@ class TodoListScreen extends StatelessWidget {
                                         context.read<TodoCubit>().getTodosByCategory(updatedTodo.category);
                                       }
                                     },
+
                                     color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                                   ),
                                 ],
@@ -164,7 +166,7 @@ class TodoListScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             onPressed: () async {
               // context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
-              final todo = await _showAddTodoDialog(context);
+              final todo = await _showAddTodoDialog(context, selectedCategoryIndex);
               if (todo != null) {
                 if (!context.mounted) return;
                 context.read<TodoCubit>().addNewTodo(todo);
@@ -179,25 +181,22 @@ class TodoListScreen extends StatelessWidget {
     );
   }
 
-  Future<Todo?> _showAddTodoDialog(BuildContext context) async {
+  Future<Todo?> _showAddTodoDialog(BuildContext context, int index) async {
     myController.text = "";
     var selectedPriorityTodo = TodoPriority.Low;
-    var selectedCategoryTodo = TodoCategory.All;
+    var selectedCategoryTodo = TodoCategory.values[index];
     Todo? todo;
     await showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       useRootNavigator: true,
       builder: (context) {
         return Container(
-          height: 350,
+          height: MediaQuery.of(context).size.height * 0.8,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                16,
-              ),
-              topRight: Radius.circular(
-                16,
-              ),
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
             ),
           ),
           child: Column(
@@ -253,6 +252,7 @@ class TodoListScreen extends StatelessWidget {
                             style: appTextStyle.getQuicksand(MyFontWeight.medium),
                           ),
                           CategoryDropdown(
+                            selectedCategory: TodoCategory.values[index],
                             onChanged: (TodoCategory? selectedCategory) {
                               // Handle the selected priority here
                               if (selectedCategory != null) {
@@ -329,10 +329,11 @@ class TodoListScreen extends StatelessWidget {
 
     return await showModalBottomSheet<Todo?>(
       context: context,
+      isScrollControlled: true,
       useRootNavigator: true,
       builder: (BuildContext context) {
         return Container(
-          height: 350,
+          height: MediaQuery.of(context).size.height * 0.8,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
