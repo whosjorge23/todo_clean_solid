@@ -4,7 +4,7 @@ import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class CategoryDropdown extends StatefulWidget {
-  CategoryDropdown({super.key, required this.onChanged, this.selectedCategory = TodoCategory.All});
+  CategoryDropdown({super.key, required this.onChanged, this.selectedCategory = TodoCategory.None});
 
   final ValueChanged<TodoCategory?>? onChanged;
   late TodoCategory? selectedCategory;

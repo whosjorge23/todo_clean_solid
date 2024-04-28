@@ -6,7 +6,7 @@ enum TodoPriority {
 }
 
 enum TodoCategory {
-  All,
+  None,
   Grocery,
   Shopping,
   Todo,

@@ -27,8 +27,12 @@ class TodoCubit extends Cubit<TodoState> {
     await isar.writeTxn(() async {
       await isar.todos.put(todo);
     });
-    filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
-    emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
+    if (state.selectedCategoryIndex == 0) {
+      filteredTodos = await isar.todos.where().findAll();
+    } else {
+      filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+    }
+    emit(state.copyWith(todos: filteredTodos));
   }
 
   Future<void> updateTodo(int id, Todo updatedTodo) async {
@@ -36,7 +40,11 @@ class TodoCubit extends Cubit<TodoState> {
     await isar.writeTxn(() async {
       await isar.todos.put(updatedTodo);
     });
-    filteredTodos = await isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
+    if (state.selectedCategoryIndex == 0) {
+      filteredTodos = await isar.todos.where().findAll();
+    } else {
+      filteredTodos = await isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
+    }
     emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: updatedTodo.category.index));
   }
 
@@ -46,8 +54,12 @@ class TodoCubit extends Cubit<TodoState> {
       final todo = await isar.todos.get(id);
       await isar.todos.delete(id);
       if (todo == null) return;
-      filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
-      emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
+      if (state.selectedCategoryIndex == 0) {
+        filteredTodos = await isar.todos.where().findAll();
+      } else {
+        filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+      }
+      emit(state.copyWith(todos: filteredTodos));
     });
   }
 
@@ -58,14 +70,18 @@ class TodoCubit extends Cubit<TodoState> {
       if (todo == null) return;
       todo.isCompleted = isChecked;
       await isar.todos.put(todo);
-      filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
-      emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: todo.category.index));
+      if (state.selectedCategoryIndex == 0) {
+        filteredTodos = await isar.todos.where().findAll();
+      } else {
+        filteredTodos = await isar.todos.filter().categoryEqualTo(todo.category).findAll();
+      }
+      emit(state.copyWith(todos: filteredTodos));
     });
   }
 
   Future<void> getTodosByCategory(TodoCategory category) async {
     List<Todo> filteredTodos;
-    if (category == TodoCategory.All) {
+    if (category == TodoCategory.None) {
       filteredTodos = await isar.todos.where().findAll();
     } else {
       filteredTodos = await isar.todos.filter().categoryEqualTo(category).findAll();
