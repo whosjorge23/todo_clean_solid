@@ -81,7 +81,7 @@ class TodoCubit extends Cubit<TodoState> {
 
   Future<void> getTodosByCategory(TodoCategory category) async {
     List<Todo> filteredTodos;
-    if (category == TodoCategory.None) {
+    if (category == TodoCategory.All) {
       filteredTodos = await isar.todos.where().findAll();
     } else {
       filteredTodos = await isar.todos.filter().categoryEqualTo(category).findAll();

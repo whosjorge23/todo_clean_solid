@@ -186,6 +186,7 @@ class TodoListScreen extends StatelessWidget {
     var selectedPriorityTodo = TodoPriority.Low;
     var selectedCategoryTodo = TodoCategory.values[index];
     Todo? todo;
+    Brightness currentBrightness = Theme.of(context).brightness;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -236,6 +237,10 @@ class TodoListScreen extends StatelessWidget {
                                 controller: myController,
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
+                                  labelText: 'Enter your todo',
+                                  labelStyle: appTextStyle
+                                      .getQuicksand(MyFontWeight.semiBold)
+                                      .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
                                   hintText: 'Enter your todo',
                                   hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
                                 ),
@@ -249,7 +254,9 @@ class TodoListScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Category:',
-                            style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                            style: appTextStyle
+                                .getQuicksand(MyFontWeight.semiBold)
+                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
                           ),
                           CategoryDropdown(
                             selectedCategory: TodoCategory.values[index],
@@ -267,7 +274,9 @@ class TodoListScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Priority:',
-                            style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                            style: appTextStyle
+                                .getQuicksand(MyFontWeight.semiBold)
+                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
                           ),
                           PriorityDropdown(
                             onChanged: (TodoPriority? selectedPriority) {
@@ -288,7 +297,9 @@ class TodoListScreen extends StatelessWidget {
                             ),
                             child: Text(
                               'Add',
-                              style: appTextStyle.getQuicksand(MyFontWeight.bold),
+                              style: appTextStyle
+                                  .getQuicksand(MyFontWeight.bold)
+                                  .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
                             ),
                             onPressed: () {
                               String enteredText = myController.text;
@@ -326,6 +337,7 @@ class TodoListScreen extends StatelessWidget {
     myController.text = todo.title;
     var selectedPriorityTodo = todo.priority;
     var selectedCategoryTodo = todo.category;
+    Brightness currentBrightness = Theme.of(context).brightness;
 
     return await showModalBottomSheet<Todo?>(
       context: context,
@@ -377,7 +389,11 @@ class TodoListScreen extends StatelessWidget {
                                 controller: myController,
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
-                                  hintText: 'Enter your todo',
+                                  hintText: 'Update your todo',
+                                  labelText: 'Update your todo',
+                                  labelStyle: appTextStyle
+                                      .getQuicksand(MyFontWeight.semiBold)
+                                      .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
                                   hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
                                 ),
                               ),
@@ -390,7 +406,9 @@ class TodoListScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Category:',
-                            style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                            style: appTextStyle
+                                .getQuicksand(MyFontWeight.semiBold)
+                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
                           ),
                           CategoryDropdown(
                             selectedCategory: selectedCategoryTodo,
@@ -407,7 +425,9 @@ class TodoListScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Priority:',
-                            style: appTextStyle.getQuicksand(MyFontWeight.medium),
+                            style: appTextStyle
+                                .getQuicksand(MyFontWeight.semiBold)
+                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
                           ),
                           PriorityDropdown(
                             selectedPriority: selectedPriorityTodo,
@@ -428,7 +448,9 @@ class TodoListScreen extends StatelessWidget {
                             ),
                             child: Text(
                               'Update',
-                              style: appTextStyle.getQuicksand(MyFontWeight.bold),
+                              style: appTextStyle
+                                  .getQuicksand(MyFontWeight.bold)
+                                  .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
                             ),
                             onPressed: () {
                               String enteredText = myController.text;

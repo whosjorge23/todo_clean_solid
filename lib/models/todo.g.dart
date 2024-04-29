@@ -92,7 +92,7 @@ Todo _todoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Todo(
-    category: _TodocategoryValueEnumMap[reader.readStringOrNull(offsets[0])] ?? TodoCategory.None,
+    category: _TodocategoryValueEnumMap[reader.readStringOrNull(offsets[0])] ?? TodoCategory.All,
     dateTimestamp: reader.readString(offsets[1]),
     isCompleted: reader.readBool(offsets[2]),
     priority: _TodopriorityValueEnumMap[reader.readStringOrNull(offsets[3])] ?? TodoPriority.Low,
@@ -110,7 +110,7 @@ P _todoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (_TodocategoryValueEnumMap[reader.readStringOrNull(offset)] ?? TodoCategory.None) as P;
+      return (_TodocategoryValueEnumMap[reader.readStringOrNull(offset)] ?? TodoCategory.All) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
@@ -131,7 +131,7 @@ const _TodocategoryEnumValueMap = {
   r'Todo': r'Todo',
 };
 const _TodocategoryValueEnumMap = {
-  r'All': TodoCategory.None,
+  r'All': TodoCategory.All,
   r'Grocery': TodoCategory.Grocery,
   r'Shopping': TodoCategory.Shopping,
   r'Todo': TodoCategory.Todo,

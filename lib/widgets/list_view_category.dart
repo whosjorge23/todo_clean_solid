@@ -15,6 +15,7 @@ class ListViewCategory extends StatefulWidget {
 class _ListViewCategoryState extends State<ListViewCategory> {
   @override
   Widget build(BuildContext context) {
+    Brightness currentBrightness = Theme.of(context).brightness;
     return BlocConsumer<TodoCubit, TodoState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -49,9 +50,12 @@ class _ListViewCategoryState extends State<ListViewCategory> {
                 child: Center(
                   child: Text(
                     TodoCategory.values[index].name,
-                    style: appTextStyle
-                        .getQuicksand(MyFontWeight.bold)
-                        .copyWith(color: isSelected ? appColors.white : null),
+                    style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
+                        color: isSelected
+                            ? appColors.white
+                            : currentBrightness == Brightness.light
+                                ? Color(0xff114A5D)
+                                : null),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

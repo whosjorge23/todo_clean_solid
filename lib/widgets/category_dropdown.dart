@@ -4,7 +4,7 @@ import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class CategoryDropdown extends StatefulWidget {
-  CategoryDropdown({super.key, required this.onChanged, this.selectedCategory = TodoCategory.None});
+  CategoryDropdown({super.key, required this.onChanged, this.selectedCategory = TodoCategory.All});
 
   final ValueChanged<TodoCategory?>? onChanged;
   late TodoCategory? selectedCategory;
@@ -16,6 +16,7 @@ class CategoryDropdown extends StatefulWidget {
 class _CategoryDropdownState extends State<CategoryDropdown> {
   @override
   Widget build(BuildContext context) {
+    Brightness currentBrightness = Theme.of(context).brightness;
     return DropdownButton<TodoCategory?>(
       value: widget.selectedCategory,
       onChanged: (TodoCategory? newValue) {
@@ -31,7 +32,9 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
           value: category,
           child: Text(
             category.toString().split('.').last,
-            style: appTextStyle.getQuicksand(MyFontWeight.regular),
+            style: appTextStyle
+                .getQuicksand(MyFontWeight.regular)
+                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
           ),
         );
       }).toList(),
