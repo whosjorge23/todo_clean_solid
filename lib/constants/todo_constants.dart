@@ -5,9 +5,4 @@ enum TodoPriority {
   Maximum,
 }
 
-enum TodoCategory {
-  All,
-  Grocery,
-  Shopping,
-  Todo,
-}
+enum TodoCategory { All, Grocery, Shopping, Todo, CheckList }

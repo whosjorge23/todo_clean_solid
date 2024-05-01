@@ -92,10 +92,12 @@ Todo _todoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Todo(
-    category: _TodocategoryValueEnumMap[reader.readStringOrNull(offsets[0])] ?? TodoCategory.All,
+    category: _TodocategoryValueEnumMap[reader.readStringOrNull(offsets[0])] ??
+        TodoCategory.All,
     dateTimestamp: reader.readString(offsets[1]),
     isCompleted: reader.readBool(offsets[2]),
-    priority: _TodopriorityValueEnumMap[reader.readStringOrNull(offsets[3])] ?? TodoPriority.Low,
+    priority: _TodopriorityValueEnumMap[reader.readStringOrNull(offsets[3])] ??
+        TodoPriority.Low,
     title: reader.readString(offsets[4]),
   );
   object.id = id;
@@ -110,13 +112,15 @@ P _todoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (_TodocategoryValueEnumMap[reader.readStringOrNull(offset)] ?? TodoCategory.All) as P;
+      return (_TodocategoryValueEnumMap[reader.readStringOrNull(offset)] ??
+          TodoCategory.All) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
-      return (_TodopriorityValueEnumMap[reader.readStringOrNull(offset)] ?? TodoPriority.Low) as P;
+      return (_TodopriorityValueEnumMap[reader.readStringOrNull(offset)] ??
+          TodoPriority.Low) as P;
     case 4:
       return (reader.readString(offset)) as P;
     default:
@@ -129,12 +133,14 @@ const _TodocategoryEnumValueMap = {
   r'Grocery': r'Grocery',
   r'Shopping': r'Shopping',
   r'Todo': r'Todo',
+  r'CheckList': r'CheckList',
 };
 const _TodocategoryValueEnumMap = {
   r'All': TodoCategory.All,
   r'Grocery': TodoCategory.Grocery,
   r'Shopping': TodoCategory.Shopping,
   r'Todo': TodoCategory.Todo,
+  r'CheckList': TodoCategory.CheckList,
 };
 const _TodopriorityEnumValueMap = {
   r'Low': r'Low',
@@ -201,7 +207,8 @@ extension TodoQueryWhere on QueryBuilder<Todo, Todo, QWhereClause> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<Todo, Todo, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -209,7 +216,8 @@ extension TodoQueryWhere on QueryBuilder<Todo, Todo, QWhereClause> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<Todo, Todo, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -323,7 +331,8 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> categoryContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> categoryContains(String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'category',
@@ -333,7 +342,9 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> categoryMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> categoryMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'category',
@@ -449,7 +460,9 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateTimestampContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateTimestampContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'dateTimestamp',
@@ -459,7 +472,9 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateTimestampMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateTimestampMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'dateTimestamp',
@@ -539,7 +554,8 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> isCompletedEqualTo(bool value) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> isCompletedEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isCompleted',
@@ -636,7 +652,8 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> priorityContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> priorityContains(String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'priority',
@@ -646,7 +663,9 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> priorityMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> priorityMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'priority',
@@ -762,7 +781,8 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> titleContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> titleContains(String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'title',
@@ -772,7 +792,8 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> titleMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> titleMatches(String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'title',
@@ -942,15 +963,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
 }
 
 extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
-  QueryBuilder<Todo, Todo, QDistinct> distinctByCategory({bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByCategory(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'category', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByDateTimestamp({bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByDateTimestamp(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'dateTimestamp', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'dateTimestamp',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -960,13 +984,15 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByPriority({bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByPriority(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'priority', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByTitle({bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByTitle(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
