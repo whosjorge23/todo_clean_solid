@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
+import 'package:todo_clean_solid/services/context_extension.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class ListViewCategory extends StatefulWidget {
@@ -49,7 +50,7 @@ class _ListViewCategoryState extends State<ListViewCategory> {
                 ),
                 child: Center(
                   child: Text(
-                    TodoCategory.values[index].name,
+                    getTralatedCategory(TodoCategory.values[index].name),
                     style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
                         color: isSelected
                             ? appColors.white
@@ -65,5 +66,22 @@ class _ListViewCategoryState extends State<ListViewCategory> {
         );
       },
     );
+  }
+
+  String getTralatedCategory(String category) {
+    String translatedCategory = "";
+    switch (category) {
+      case "All":
+        translatedCategory = context.l10n.category_all;
+      case "Grocery":
+        translatedCategory = context.l10n.category_grocery;
+      case "Shopping":
+        translatedCategory = context.l10n.category_shopping;
+      case "Todo":
+        translatedCategory = context.l10n.category_todo;
+      case "CheckList":
+        translatedCategory = context.l10n.category_checklist;
+    }
+    return translatedCategory;
   }
 }

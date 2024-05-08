@@ -112,4 +112,25 @@ class SharedPreferenceService {
         return 'system'; // Default to system if unknown
     }
   }
+
+  Future<void> setLocale(Locale locale) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('locale', locale.toString());
+  }
+
+  Future<Locale?> getLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? localeString = prefs.getString('locale');
+    if (localeString != null) {
+      // Locale string is expected to be in the form 'languageCode_countryCode'
+      // Splitting the string to get the language code and the country code
+      List<String> parts = localeString.split('_');
+      // If there's no underscore, parts[0] will be the whole string
+      String languageCode = parts[0];
+      String? countryCode = parts.length > 1 ? parts[1] : null;
+
+      return Locale(languageCode, countryCode);
+    }
+    return null;
+  }
 }

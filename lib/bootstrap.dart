@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:todo_clean_solid/models/todo.dart';
+import 'package:todo_clean_solid/services/context_service.dart';
 import 'package:todo_clean_solid/services/shared_preferences_service.dart';
 import 'package:todo_clean_solid/theme/app_colors.dart';
 
@@ -15,6 +16,9 @@ Future<void> bootstrap() async {
 
 /// Create singletons (services) that can be shared across the app.
 void _registerSingletons() {
+  final contextService = ContextService();
+  // Global Context
+  GetIt.I.registerSingleton<ContextService>(contextService);
   // Shared Preferences
   GetIt.I.registerLazySingleton<SharedPreferenceService>(() => SharedPreferenceService());
   GetIt.I.registerLazySingleton<QuicksandTextStyle>(() => QuicksandTextStyle());

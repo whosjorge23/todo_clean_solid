@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:isar/isar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:todo_clean_solid/bootstrap.dart';
 import 'package:todo_clean_solid/features/loading_screen/loading_screen.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
             floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
           ),
           themeMode: state.themeMode,
+          locale: state.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: GoRouter(
             routes: [
               GoRoute(

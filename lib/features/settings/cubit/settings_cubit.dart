@@ -14,13 +14,18 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> loadSettings() async {
+    Locale? locale = await sharedPrefsService.getLocale() ?? const Locale('en');
     final themeMode = await sharedPrefsService.getValue<ThemeMode>('themeMode') ?? ThemeMode.system;
     final isDateTimeEnabled = await sharedPrefsService.getValue<bool>('isDateTimeEnable') ?? false;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
     String buildNumber = packageInfo.buildNumber;
     emit(state.copyWith(
-        themeMode: themeMode, isDateTimeEnabled: isDateTimeEnabled, version: version, buildNumber: buildNumber));
+        locale: locale,
+        themeMode: themeMode,
+        isDateTimeEnabled: isDateTimeEnabled,
+        version: version,
+        buildNumber: buildNumber));
   }
 
   Future<void> toggleTheme(ThemeMode themeMode) async {
@@ -39,5 +44,10 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> toggleDateTime() async {
     sharedPrefsService.setValue<bool>('isDateTimeEnable', !state.isDateTimeEnabled);
     emit(state.copyWith(isDateTimeEnabled: !state.isDateTimeEnabled));
+  }
+
+  void setLocale(Locale locale) async {
+    await sharedPrefsService.setLocale(locale);
+    emit(state.copyWith(locale: locale));
   }
 }

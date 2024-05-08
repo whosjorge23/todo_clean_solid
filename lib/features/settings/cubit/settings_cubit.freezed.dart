@@ -17,27 +17,28 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SettingsState {
   ThemeMode get themeMode => throw _privateConstructorUsedError;
+  dynamic get locale => throw _privateConstructorUsedError;
   bool get isDateTimeEnabled => throw _privateConstructorUsedError;
   String get version => throw _privateConstructorUsedError;
   String get buildNumber => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)
+    required TResult Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)?
+    TResult? Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)?
+    TResult Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)?
         initial,
     required TResult orElse(),
   }) =>
@@ -72,6 +73,7 @@ abstract class $SettingsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ThemeMode themeMode,
+      dynamic locale,
       bool isDateTimeEnabled,
       String version,
       String buildNumber});
@@ -91,6 +93,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @override
   $Res call({
     Object? themeMode = null,
+    Object? locale = freezed,
     Object? isDateTimeEnabled = null,
     Object? version = null,
     Object? buildNumber = null,
@@ -100,6 +103,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       isDateTimeEnabled: null == isDateTimeEnabled
           ? _value.isDateTimeEnabled
           : isDateTimeEnabled // ignore: cast_nullable_to_non_nullable
@@ -126,6 +133,7 @@ abstract class _$$InitialImplCopyWith<$Res>
   @useResult
   $Res call(
       {ThemeMode themeMode,
+      dynamic locale,
       bool isDateTimeEnabled,
       String version,
       String buildNumber});
@@ -143,6 +151,7 @@ class __$$InitialImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? themeMode = null,
+    Object? locale = freezed,
     Object? isDateTimeEnabled = null,
     Object? version = null,
     Object? buildNumber = null,
@@ -152,6 +161,7 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      locale: freezed == locale ? _value.locale! : locale,
       isDateTimeEnabled: null == isDateTimeEnabled
           ? _value.isDateTimeEnabled
           : isDateTimeEnabled // ignore: cast_nullable_to_non_nullable
@@ -173,6 +183,7 @@ class __$$InitialImplCopyWithImpl<$Res>
 class _$InitialImpl implements _Initial {
   const _$InitialImpl(
       {this.themeMode = ThemeMode.system,
+      this.locale = const Locale('en'),
       this.isDateTimeEnabled = false,
       this.version = "1.0",
       this.buildNumber = "1"});
@@ -180,6 +191,9 @@ class _$InitialImpl implements _Initial {
   @override
   @JsonKey()
   final ThemeMode themeMode;
+  @override
+  @JsonKey()
+  final dynamic locale;
   @override
   @JsonKey()
   final bool isDateTimeEnabled;
@@ -192,7 +206,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'SettingsState.initial(themeMode: $themeMode, isDateTimeEnabled: $isDateTimeEnabled, version: $version, buildNumber: $buildNumber)';
+    return 'SettingsState.initial(themeMode: $themeMode, locale: $locale, isDateTimeEnabled: $isDateTimeEnabled, version: $version, buildNumber: $buildNumber)';
   }
 
   @override
@@ -202,6 +216,7 @@ class _$InitialImpl implements _Initial {
             other is _$InitialImpl &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
+            const DeepCollectionEquality().equals(other.locale, locale) &&
             (identical(other.isDateTimeEnabled, isDateTimeEnabled) ||
                 other.isDateTimeEnabled == isDateTimeEnabled) &&
             (identical(other.version, version) || other.version == version) &&
@@ -211,7 +226,12 @@ class _$InitialImpl implements _Initial {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, themeMode, isDateTimeEnabled, version, buildNumber);
+      runtimeType,
+      themeMode,
+      const DeepCollectionEquality().hash(locale),
+      isDateTimeEnabled,
+      version,
+      buildNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -222,33 +242,35 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)
+    required TResult Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)
         initial,
   }) {
-    return initial(themeMode, isDateTimeEnabled, version, buildNumber);
+    return initial(themeMode, locale, isDateTimeEnabled, version, buildNumber);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)?
+    TResult? Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)?
         initial,
   }) {
-    return initial?.call(themeMode, isDateTimeEnabled, version, buildNumber);
+    return initial?.call(
+        themeMode, locale, isDateTimeEnabled, version, buildNumber);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeMode themeMode, bool isDateTimeEnabled,
-            String version, String buildNumber)?
+    TResult Function(ThemeMode themeMode, dynamic locale,
+            bool isDateTimeEnabled, String version, String buildNumber)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(themeMode, isDateTimeEnabled, version, buildNumber);
+      return initial(
+          themeMode, locale, isDateTimeEnabled, version, buildNumber);
     }
     return orElse();
   }
@@ -285,12 +307,15 @@ class _$InitialImpl implements _Initial {
 abstract class _Initial implements SettingsState {
   const factory _Initial(
       {final ThemeMode themeMode,
+      final dynamic locale,
       final bool isDateTimeEnabled,
       final String version,
       final String buildNumber}) = _$InitialImpl;
 
   @override
   ThemeMode get themeMode;
+  @override
+  dynamic get locale;
   @override
   bool get isDateTimeEnabled;
   @override
