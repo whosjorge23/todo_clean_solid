@@ -10,6 +10,7 @@ import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/models/todo.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
+import 'package:todo_clean_solid/services/context_extension.dart';
 import 'package:todo_clean_solid/widgets/category_dropdown.dart';
 import 'package:todo_clean_solid/widgets/list_view_category.dart';
 import 'package:todo_clean_solid/widgets/reusable_alert_dialog.dart';
@@ -18,11 +19,19 @@ import 'package:uuid/uuid.dart';
 
 import '../../shared_export.dart';
 
-class TodoListScreen extends StatelessWidget {
+class TodoListScreen extends StatefulWidget {
   TodoListScreen({Key? key, required this.title}) : super(key: key);
   final String title;
+
+  @override
+  State<TodoListScreen> createState() => _TodoListScreenState();
+}
+
+class _TodoListScreenState extends State<TodoListScreen> {
   Random random = Random();
+
   final myController = TextEditingController();
+
   var uuid = const Uuid();
 
   @override
@@ -34,7 +43,7 @@ class TodoListScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             title: Text(
-              title,
+              widget.title,
               style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
             ),
             actions: [
@@ -107,7 +116,7 @@ class TodoListScreen extends StatelessWidget {
                                                 ),
                                           ),
                                           Text(
-                                            'Category: ${todos[i].category.name}',
+                                            '${context.l10n.category}: ${getTralatedCategory(todos[i].category.name)}',
                                             style: appTextStyle.getQuicksand(MyFontWeight.light),
                                           ),
                                         ],
@@ -132,10 +141,10 @@ class TodoListScreen extends StatelessWidget {
                                     onPressed: () {
                                       ReusableAlertDialog.show(
                                         context,
-                                        title: 'Delete Todo',
-                                        content: 'Are you sure you want to proceed?',
-                                        confirmButtonText: 'YES',
-                                        cancelButtonText: 'NO',
+                                        title: context.l10n.delete_todo,
+                                        content: context.l10n.are_you_sure,
+                                        confirmButtonText: context.l10n.generic_yes,
+                                        cancelButtonText: context.l10n.generic_no,
                                         onConfirm: () {
                                           context.read<TodoCubit>().deleteTodo(todos[i].id);
                                           Navigator.pop(context);
@@ -155,7 +164,7 @@ class TodoListScreen extends StatelessWidget {
                       )
                     : Center(
                         child: Text(
-                          'Nothing to display',
+                          context.l10n.nothing_to_display,
                           style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
                         ),
                       ),
@@ -173,7 +182,7 @@ class TodoListScreen extends StatelessWidget {
                 context.read<TodoCubit>().getTodosByCategory(todo.category);
               }
             },
-            tooltip: 'Add Todo',
+            tooltip: context.l10n.add_todo,
             child: const Icon(Icons.add),
           ),
         );
@@ -217,7 +226,7 @@ class TodoListScreen extends StatelessWidget {
                   bottom: 16,
                 ),
                 child: Text(
-                  "Add Todo",
+                  context.l10n.add_todo,
                   style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
                 ),
               ),
@@ -237,11 +246,11 @@ class TodoListScreen extends StatelessWidget {
                                 controller: myController,
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
-                                  labelText: 'Enter your todo',
+                                  labelText: context.l10n.enter_todo,
                                   labelStyle: appTextStyle
                                       .getQuicksand(MyFontWeight.semiBold)
                                       .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
-                                  hintText: 'Enter your todo',
+                                  hintText: context.l10n.enter_todo,
                                   hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
                                 ),
                               ),
@@ -253,7 +262,7 @@ class TodoListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Category:',
+                            '${context.l10n.category}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
                                 .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
@@ -273,7 +282,7 @@ class TodoListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Priority:',
+                            '${context.l10n.priority}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
                                 .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
@@ -296,7 +305,7 @@ class TodoListScreen extends StatelessWidget {
                               textStyle: Theme.of(context).textTheme.labelLarge,
                             ),
                             child: Text(
-                              'Add',
+                              context.l10n.generic_add,
                               style: appTextStyle
                                   .getQuicksand(MyFontWeight.bold)
                                   .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
@@ -369,7 +378,7 @@ class TodoListScreen extends StatelessWidget {
                   bottom: 16,
                 ),
                 child: Text(
-                  "Edit Todo",
+                  context.l10n.edit_todo,
                   style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
                 ),
               ),
@@ -389,8 +398,8 @@ class TodoListScreen extends StatelessWidget {
                                 controller: myController,
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
-                                  hintText: 'Update your todo',
-                                  labelText: 'Update your todo',
+                                  hintText: context.l10n.update_todo,
+                                  labelText: context.l10n.update_todo,
                                   labelStyle: appTextStyle
                                       .getQuicksand(MyFontWeight.semiBold)
                                       .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
@@ -405,7 +414,7 @@ class TodoListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Category:',
+                            '${context.l10n.category}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
                                 .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
@@ -424,7 +433,7 @@ class TodoListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Priority:',
+                            '${context.l10n.priority}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
                                 .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
@@ -447,7 +456,7 @@ class TodoListScreen extends StatelessWidget {
                               textStyle: Theme.of(context).textTheme.labelLarge,
                             ),
                             child: Text(
-                              'Update',
+                              context.l10n.generic_update,
                               style: appTextStyle
                                   .getQuicksand(MyFontWeight.bold)
                                   .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
@@ -461,7 +470,7 @@ class TodoListScreen extends StatelessWidget {
                                 todo.category = selectedCategoryTodo;
                                 todo.priority = selectedPriorityTodo;
                               }
-                              Navigator.pop(context, todo); // Return the updated todo
+                              Navigator.pop(context, todo);
                             },
                           ),
                         ],
@@ -475,5 +484,22 @@ class TodoListScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  String getTralatedCategory(String category) {
+    String translatedCategory = "";
+    switch (category) {
+      case "All":
+        translatedCategory = context.l10n.category_all;
+      case "Grocery":
+        translatedCategory = context.l10n.category_grocery;
+      case "Shopping":
+        translatedCategory = context.l10n.category_shopping;
+      case "Todo":
+        translatedCategory = context.l10n.category_todo;
+      case "CheckList":
+        translatedCategory = context.l10n.category_checklist;
+    }
+    return translatedCategory;
   }
 }

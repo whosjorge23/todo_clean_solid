@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
+import 'package:todo_clean_solid/services/context_extension.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class PriorityDropdown extends StatefulWidget {
@@ -30,7 +31,7 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
         return DropdownMenuItem<TodoPriority?>(
           value: priority,
           child: Text(
-            priority.toString().split('.').last,
+            getTralatedPriority(priority.toString().split('.').last),
             style: appTextStyle.getQuicksand(MyFontWeight.regular).copyWith(color: getColorTodoPriority(priority)),
           ),
         );
@@ -55,5 +56,20 @@ class _PriorityDropdownState extends State<PriorityDropdown> {
         break;
     }
     return todoPriorityColor;
+  }
+
+  String getTralatedPriority(String priority) {
+    String translatedPriority = "";
+    switch (priority) {
+      case "Low":
+        translatedPriority = context.l10n.priority_low;
+      case "Medium":
+        translatedPriority = context.l10n.priority_medium;
+      case "High":
+        translatedPriority = context.l10n.priority_high;
+      case "Maximum":
+        translatedPriority = context.l10n.priority_maximum;
+    }
+    return translatedPriority;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/extension/quicksand_text_style.dart';
+import 'package:todo_clean_solid/services/context_extension.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 class CategoryDropdown extends StatefulWidget {
@@ -31,7 +32,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
         return DropdownMenuItem<TodoCategory?>(
           value: category,
           child: Text(
-            category.toString().split('.').last,
+            getTralatedCategory(category.toString().split('.').last),
             style: appTextStyle
                 .getQuicksand(MyFontWeight.regular)
                 .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
@@ -39,5 +40,22 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
         );
       }).toList(),
     );
+  }
+
+  String getTralatedCategory(String category) {
+    String translatedCategory = "";
+    switch (category) {
+      case "All":
+        translatedCategory = context.l10n.category_all;
+      case "Grocery":
+        translatedCategory = context.l10n.category_grocery;
+      case "Shopping":
+        translatedCategory = context.l10n.category_shopping;
+      case "Todo":
+        translatedCategory = context.l10n.category_todo;
+      case "CheckList":
+        translatedCategory = context.l10n.category_checklist;
+    }
+    return translatedCategory;
   }
 }
