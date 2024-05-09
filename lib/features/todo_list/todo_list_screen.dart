@@ -168,6 +168,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
                         ),
                       ),
+                const Gap(50),
               ],
             ),
           ),
