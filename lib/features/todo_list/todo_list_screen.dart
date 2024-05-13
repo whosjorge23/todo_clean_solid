@@ -58,18 +58,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
               )
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Gap(10),
-                const SizedBox(
-                  height: 50,
-                  child: ListViewCategory(),
-                ),
-                todos.isNotEmpty
+          body: Column(
+            children: [
+              const Gap(10),
+              const SizedBox(
+                height: 50,
+                child: ListViewCategory(),
+              ),
+              Expanded(
+                child: todos.isNotEmpty
                     ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: todos.length,
                         itemBuilder: (context, i) {
                           return Column(
@@ -92,7 +90,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         context.read<TodoCubit>().getTodosByCategory(updatedTodo.category);
                                       }
                                     },
-
                                     color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                                   ),
                                 ],
@@ -168,14 +165,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
                         ),
                       ),
-                const Gap(50),
-              ],
-            ),
+              ),
+              const Gap(50),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             onPressed: () async {
-              // context.read<TodoCubit>().getTodosByCategory(TodoCategory.All);
               final todo = await _showAddTodoDialog(context, selectedCategoryIndex);
               if (todo != null) {
                 if (!context.mounted) return;
