@@ -15,22 +15,16 @@ import 'package:todo_clean_solid/shared_export.dart';
 
 void main() async {
   await bootstrap();
-  final isar = await Isar.open(
-    [TodoSchema],
-    directory: (await getApplicationSupportDirectory()).path,
-  );
   runApp(
     BlocProvider(
       create: (_) => SettingsCubit(),
-      child: MyApp(isar: isar),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final Isar isar; // Declare a variable to hold Isar instance
-
-  const MyApp({super.key, required this.isar});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +60,7 @@ class MyApp extends StatelessWidget {
                 path: '/todo_list',
                 pageBuilder: (context, state) => MaterialPage(
                   child: BlocProvider<TodoCubit>(
-                    create: (context) => TodoCubit(isar),
+                    create: (context) => TodoCubit(),
                     child: TodoListScreen(
                       title: 'Clean Todos',
                     ),
