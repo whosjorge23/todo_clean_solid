@@ -55,7 +55,7 @@ class _ListViewCategoryState extends State<ListViewCategory> {
                         color: isSelected
                             ? appColors.white
                             : currentBrightness == Brightness.light
-                                ? Color(0xff114A5D)
+                                ? appColors.blue
                                 : null),
                     overflow: TextOverflow.ellipsis,
                   ),

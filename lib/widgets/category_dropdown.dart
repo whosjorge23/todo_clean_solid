@@ -35,7 +35,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
             getTralatedCategory(category.toString().split('.').last),
             style: appTextStyle
                 .getQuicksand(MyFontWeight.regular)
-                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
+                .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
           ),
         );
       }).toList(),

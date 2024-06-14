@@ -34,15 +34,31 @@ class MyApp extends StatelessWidget {
           title: 'Clean Todos',
           theme: ThemeData(
             brightness: Brightness.light,
-            colorScheme: const ColorScheme.light(primary: Color(0xff114A5D)),
+            colorScheme: ColorScheme.light(primary: appColors.blue),
             useMaterial3: true,
             floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+                backgroundColor: appColors.blue.withOpacity(0.7),
+                foregroundColor: appColors.white,
+                elevation: 0,
+              ),
+            ),
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            colorScheme: const ColorScheme.dark(primary: Color(0xff294a6e)),
+            colorScheme: ColorScheme.dark(primary: appColors.darkBlue),
             useMaterial3: true,
             floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+                backgroundColor: appColors.darkBlue.withOpacity(0.7),
+                foregroundColor: appColors.white,
+                elevation: 0,
+              ),
+            ),
           ),
           themeMode: state.themeMode,
           locale: state.locale,

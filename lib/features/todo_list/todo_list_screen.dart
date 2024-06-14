@@ -262,7 +262,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             '${context.l10n.category}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
-                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
+                                .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
                           ),
                           CategoryDropdown(
                             selectedCategory: TodoCategory.values[index],
@@ -282,7 +282,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             '${context.l10n.priority}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
-                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
+                                .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
                           ),
                           PriorityDropdown(
                             onChanged: (TodoPriority? selectedPriority) {
@@ -294,36 +294,36 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           ),
                         ],
                       ),
+                      Gap(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
+                          Expanded(
+                            child: ElevatedButton(
+                              child: Text(
+                                context.l10n.generic_add,
+                                style: appTextStyle
+                                    .getQuicksand(MyFontWeight.bold)
+                                    .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
+                              ),
+                              onPressed: () {
+                                String enteredText = myController.text;
+                                if (enteredText != "") {
+                                  var now = DateTime.now();
+                                  var formatter = DateFormat('dd-MM-yyyy hh:mm a');
+                                  String formattedDate = formatter.format(now);
+                                  todo = Todo(
+                                    // id: uuid.v4().toString(),
+                                    title: enteredText,
+                                    isCompleted: false,
+                                    priority: selectedPriorityTodo,
+                                    dateTimestamp: formattedDate,
+                                    category: selectedCategoryTodo,
+                                  );
+                                }
+                                context.pop();
+                              },
                             ),
-                            child: Text(
-                              context.l10n.generic_add,
-                              style: appTextStyle
-                                  .getQuicksand(MyFontWeight.bold)
-                                  .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
-                            ),
-                            onPressed: () {
-                              String enteredText = myController.text;
-                              if (enteredText != "") {
-                                var now = DateTime.now();
-                                var formatter = DateFormat('dd-MM-yyyy hh:mm a');
-                                String formattedDate = formatter.format(now);
-                                todo = Todo(
-                                  // id: uuid.v4().toString(),
-                                  title: enteredText,
-                                  isCompleted: false,
-                                  priority: selectedPriorityTodo,
-                                  dateTimestamp: formattedDate,
-                                  category: selectedCategoryTodo,
-                                );
-                              }
-                              context.pop();
-                            },
                           ),
                         ],
                       ),
@@ -414,7 +414,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             '${context.l10n.category}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
-                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
+                                .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
                           ),
                           CategoryDropdown(
                             selectedCategory: selectedCategoryTodo,
@@ -433,7 +433,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             '${context.l10n.priority}:',
                             style: appTextStyle
                                 .getQuicksand(MyFontWeight.semiBold)
-                                .copyWith(color: currentBrightness == Brightness.light ? Color(0xff114A5D) : null),
+                                .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
                           ),
                           PriorityDropdown(
                             selectedPriority: selectedPriorityTodo,
@@ -445,30 +445,30 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           ),
                         ],
                       ),
+                      Gap(16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.labelLarge,
+                          Expanded(
+                            child: ElevatedButton(
+                              child: Text(
+                                context.l10n.generic_update,
+                                style: appTextStyle
+                                    .getQuicksand(MyFontWeight.bold)
+                                    .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
+                              ),
+                              onPressed: () {
+                                String enteredText = myController.text;
+                                if (enteredText.isNotEmpty) {
+                                  //Update the todo with new values
+                                  todo.id = todo.id;
+                                  todo.title = enteredText;
+                                  todo.category = selectedCategoryTodo;
+                                  todo.priority = selectedPriorityTodo;
+                                }
+                                Navigator.pop(context, todo);
+                              },
                             ),
-                            child: Text(
-                              context.l10n.generic_update,
-                              style: appTextStyle
-                                  .getQuicksand(MyFontWeight.bold)
-                                  .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
-                            ),
-                            onPressed: () {
-                              String enteredText = myController.text;
-                              if (enteredText.isNotEmpty) {
-                                //Update the todo with new values
-                                todo.id = todo.id;
-                                todo.title = enteredText;
-                                todo.category = selectedCategoryTodo;
-                                todo.priority = selectedPriorityTodo;
-                              }
-                              Navigator.pop(context, todo);
-                            },
                           ),
                         ],
                       ),
