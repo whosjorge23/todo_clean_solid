@@ -11,8 +11,6 @@ part 'todo_state.dart';
 part 'todo_cubit.freezed.dart';
 
 class TodoCubit extends Cubit<TodoState> {
-
-
   TodoCubit() : super(const TodoState.initial()) {
     loadTodos();
   }
@@ -102,5 +100,25 @@ class TodoCubit extends Cubit<TodoState> {
 
   Future<void> updateCategoryIndex(int index) async {
     emit(state.copyWith(selectedCategoryIndex: index));
+  }
+
+  Future<void> updateAddCategoryIndex(int index) async {
+    emit(state.copyWith(selectedAddCategoryIndex: index));
+  }
+
+  Future<void> updateAddPriorityIndex(int index) async {
+    emit(state.copyWith(selectedAddPriorityIndex: index));
+  }
+
+  Future<void> updateEditCategoryIndex(int index) async {
+    emit(state.copyWith(selectedEditCategoryIndex: index));
+  }
+
+  Future<void> updateEditPriorityIndex(int index) async {
+    emit(state.copyWith(selectedEditPriorityIndex: index));
+  }
+
+  void resetEditPriorityAndCategory() {
+    emit(state.copyWith(selectedEditPriorityIndex: null, selectedEditCategoryIndex: null));
   }
 }

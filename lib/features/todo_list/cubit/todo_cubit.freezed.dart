@@ -18,20 +18,44 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TodoState {
   List<Todo> get todos => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
+  int get selectedAddCategoryIndex => throw _privateConstructorUsedError;
+  int get selectedAddPriorityIndex => throw _privateConstructorUsedError;
+  int? get selectedEditCategoryIndex => throw _privateConstructorUsedError;
+  int? get selectedEditPriorityIndex => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Todo> todos, int selectedCategoryIndex)
+    required TResult Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Todo> todos, int selectedCategoryIndex)? initial,
+    TResult? Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)?
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Todo> todos, int selectedCategoryIndex)? initial,
+    TResult Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)?
+        initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +86,13 @@ abstract class $TodoStateCopyWith<$Res> {
   factory $TodoStateCopyWith(TodoState value, $Res Function(TodoState) then) =
       _$TodoStateCopyWithImpl<$Res, TodoState>;
   @useResult
-  $Res call({List<Todo> todos, int selectedCategoryIndex});
+  $Res call(
+      {List<Todo> todos,
+      int selectedCategoryIndex,
+      int selectedAddCategoryIndex,
+      int selectedAddPriorityIndex,
+      int? selectedEditCategoryIndex,
+      int? selectedEditPriorityIndex});
 }
 
 /// @nodoc
@@ -80,6 +110,10 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
   $Res call({
     Object? todos = null,
     Object? selectedCategoryIndex = null,
+    Object? selectedAddCategoryIndex = null,
+    Object? selectedAddPriorityIndex = null,
+    Object? selectedEditCategoryIndex = freezed,
+    Object? selectedEditPriorityIndex = freezed,
   }) {
     return _then(_value.copyWith(
       todos: null == todos
@@ -90,6 +124,22 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedAddCategoryIndex: null == selectedAddCategoryIndex
+          ? _value.selectedAddCategoryIndex
+          : selectedAddCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedAddPriorityIndex: null == selectedAddPriorityIndex
+          ? _value.selectedAddPriorityIndex
+          : selectedAddPriorityIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedEditCategoryIndex: freezed == selectedEditCategoryIndex
+          ? _value.selectedEditCategoryIndex
+          : selectedEditCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selectedEditPriorityIndex: freezed == selectedEditPriorityIndex
+          ? _value.selectedEditPriorityIndex
+          : selectedEditPriorityIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -102,7 +152,13 @@ abstract class _$$InitialImplCopyWith<$Res>
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Todo> todos, int selectedCategoryIndex});
+  $Res call(
+      {List<Todo> todos,
+      int selectedCategoryIndex,
+      int selectedAddCategoryIndex,
+      int selectedAddPriorityIndex,
+      int? selectedEditCategoryIndex,
+      int? selectedEditPriorityIndex});
 }
 
 /// @nodoc
@@ -118,6 +174,10 @@ class __$$InitialImplCopyWithImpl<$Res>
   $Res call({
     Object? todos = null,
     Object? selectedCategoryIndex = null,
+    Object? selectedAddCategoryIndex = null,
+    Object? selectedAddPriorityIndex = null,
+    Object? selectedEditCategoryIndex = freezed,
+    Object? selectedEditPriorityIndex = freezed,
   }) {
     return _then(_$InitialImpl(
       todos: null == todos
@@ -128,6 +188,22 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedAddCategoryIndex: null == selectedAddCategoryIndex
+          ? _value.selectedAddCategoryIndex
+          : selectedAddCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedAddPriorityIndex: null == selectedAddPriorityIndex
+          ? _value.selectedAddPriorityIndex
+          : selectedAddPriorityIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedEditCategoryIndex: freezed == selectedEditCategoryIndex
+          ? _value.selectedEditCategoryIndex
+          : selectedEditCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selectedEditPriorityIndex: freezed == selectedEditPriorityIndex
+          ? _value.selectedEditPriorityIndex
+          : selectedEditPriorityIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -136,7 +212,12 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 class _$InitialImpl implements _Initial {
   const _$InitialImpl(
-      {final List<Todo> todos = const [], this.selectedCategoryIndex = 0})
+      {final List<Todo> todos = const [],
+      this.selectedCategoryIndex = 0,
+      this.selectedAddCategoryIndex = 0,
+      this.selectedAddPriorityIndex = 0,
+      this.selectedEditCategoryIndex,
+      this.selectedEditPriorityIndex})
       : _todos = todos;
 
   final List<Todo> _todos;
@@ -151,10 +232,20 @@ class _$InitialImpl implements _Initial {
   @override
   @JsonKey()
   final int selectedCategoryIndex;
+  @override
+  @JsonKey()
+  final int selectedAddCategoryIndex;
+  @override
+  @JsonKey()
+  final int selectedAddPriorityIndex;
+  @override
+  final int? selectedEditCategoryIndex;
+  @override
+  final int? selectedEditPriorityIndex;
 
   @override
   String toString() {
-    return 'TodoState.initial(todos: $todos, selectedCategoryIndex: $selectedCategoryIndex)';
+    return 'TodoState.initial(todos: $todos, selectedCategoryIndex: $selectedCategoryIndex, selectedAddCategoryIndex: $selectedAddCategoryIndex, selectedAddPriorityIndex: $selectedAddPriorityIndex, selectedEditCategoryIndex: $selectedEditCategoryIndex, selectedEditPriorityIndex: $selectedEditPriorityIndex)';
   }
 
   @override
@@ -164,12 +255,30 @@ class _$InitialImpl implements _Initial {
             other is _$InitialImpl &&
             const DeepCollectionEquality().equals(other._todos, _todos) &&
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex));
+                other.selectedCategoryIndex == selectedCategoryIndex) &&
+            (identical(
+                    other.selectedAddCategoryIndex, selectedAddCategoryIndex) ||
+                other.selectedAddCategoryIndex == selectedAddCategoryIndex) &&
+            (identical(
+                    other.selectedAddPriorityIndex, selectedAddPriorityIndex) ||
+                other.selectedAddPriorityIndex == selectedAddPriorityIndex) &&
+            (identical(other.selectedEditCategoryIndex,
+                    selectedEditCategoryIndex) ||
+                other.selectedEditCategoryIndex == selectedEditCategoryIndex) &&
+            (identical(other.selectedEditPriorityIndex,
+                    selectedEditPriorityIndex) ||
+                other.selectedEditPriorityIndex == selectedEditPriorityIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_todos), selectedCategoryIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_todos),
+      selectedCategoryIndex,
+      selectedAddCategoryIndex,
+      selectedAddPriorityIndex,
+      selectedEditCategoryIndex,
+      selectedEditPriorityIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -180,28 +289,66 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Todo> todos, int selectedCategoryIndex)
+    required TResult Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)
         initial,
   }) {
-    return initial(todos, selectedCategoryIndex);
+    return initial(
+        todos,
+        selectedCategoryIndex,
+        selectedAddCategoryIndex,
+        selectedAddPriorityIndex,
+        selectedEditCategoryIndex,
+        selectedEditPriorityIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Todo> todos, int selectedCategoryIndex)? initial,
+    TResult? Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)?
+        initial,
   }) {
-    return initial?.call(todos, selectedCategoryIndex);
+    return initial?.call(
+        todos,
+        selectedCategoryIndex,
+        selectedAddCategoryIndex,
+        selectedAddPriorityIndex,
+        selectedEditCategoryIndex,
+        selectedEditPriorityIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Todo> todos, int selectedCategoryIndex)? initial,
+    TResult Function(
+            List<Todo> todos,
+            int selectedCategoryIndex,
+            int selectedAddCategoryIndex,
+            int selectedAddPriorityIndex,
+            int? selectedEditCategoryIndex,
+            int? selectedEditPriorityIndex)?
+        initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(todos, selectedCategoryIndex);
+      return initial(
+          todos,
+          selectedCategoryIndex,
+          selectedAddCategoryIndex,
+          selectedAddPriorityIndex,
+          selectedEditCategoryIndex,
+          selectedEditPriorityIndex);
     }
     return orElse();
   }
@@ -238,12 +385,24 @@ class _$InitialImpl implements _Initial {
 abstract class _Initial implements TodoState {
   const factory _Initial(
       {final List<Todo> todos,
-      final int selectedCategoryIndex}) = _$InitialImpl;
+      final int selectedCategoryIndex,
+      final int selectedAddCategoryIndex,
+      final int selectedAddPriorityIndex,
+      final int? selectedEditCategoryIndex,
+      final int? selectedEditPriorityIndex}) = _$InitialImpl;
 
   @override
   List<Todo> get todos;
   @override
   int get selectedCategoryIndex;
+  @override
+  int get selectedAddCategoryIndex;
+  @override
+  int get selectedAddPriorityIndex;
+  @override
+  int? get selectedEditCategoryIndex;
+  @override
+  int? get selectedEditPriorityIndex;
   @override
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
