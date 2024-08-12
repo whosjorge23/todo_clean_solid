@@ -91,7 +91,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
                                         context.read<TodoCubit>().updateTodo(todos[i].id, updatedTodo);
-                                        context.read<TodoCubit>().getTodosByCategory(updatedTodo.category);
+                                        await context.read<TodoCubit>().getTodosByCategory(updatedTodo.category);
                                       }
                                     },
                                     color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
@@ -586,7 +586,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         todo.category = selectedCategoryTodo;
                                         todo.priority = selectedPriorityTodo;
                                       }
-                                      Navigator.pop(context, todo);
+                                      context.pop();
                                     },
                                   ),
                                 ),
@@ -605,6 +605,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       },
     ).then((value) {
       todosCubit.resetEditPriorityAndCategory();
+      return todo;
     });
   }
 

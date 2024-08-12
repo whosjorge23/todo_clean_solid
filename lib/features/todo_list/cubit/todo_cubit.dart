@@ -44,6 +44,7 @@ class TodoCubit extends Cubit<TodoState> {
       filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
     }
     emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: updatedTodo.category.index));
+    await getTodosByCategory(TodoCategory.values[state.selectedCategoryIndex]);
   }
 
   Future<void> deleteTodo(int id) async {
