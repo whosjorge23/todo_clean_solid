@@ -117,7 +117,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                                 ),
                                           ),
                                           Text(
-                                            '${context.l10n.category}: ${getTralatedCategory(todos[i].category.name)}',
+                                            '${context.l10n.category}: ${getTranslatedCategory(todos[i].category.name)}',
                                             style: appTextStyle.getQuicksand(MyFontWeight.light),
                                           ),
                                         ],
@@ -609,20 +609,20 @@ class _TodoListScreenState extends State<TodoListScreen> {
     });
   }
 
-  String getTralatedCategory(String category) {
-    String translatedCategory = "";
+  String getTranslatedCategory(String category) {
     switch (category) {
       case "All":
-        translatedCategory = context.l10n.category_all;
+        return context.l10n.category_all;
       case "Grocery":
-        translatedCategory = context.l10n.category_grocery;
+        return context.l10n.category_grocery;
       case "Shopping":
-        translatedCategory = context.l10n.category_shopping;
+        return context.l10n.category_shopping;
       case "Todo":
-        translatedCategory = context.l10n.category_todo;
+        return context.l10n.category_todo;
       case "CheckList":
-        translatedCategory = context.l10n.category_checklist;
+        return context.l10n.category_checklist;
+      default:
+        return category; // Fallback to the original category name
     }
-    return translatedCategory;
   }
 }

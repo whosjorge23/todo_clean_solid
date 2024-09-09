@@ -50,7 +50,7 @@ class _ListViewCategoryState extends State<ListViewCategory> {
                 ),
                 child: Center(
                   child: Text(
-                    getTralatedCategory(TodoCategory.values[index].name),
+                    getTranslatedCategory(TodoCategory.values[index].name),
                     style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
                         color: isSelected
                             ? appColors.white
@@ -68,20 +68,20 @@ class _ListViewCategoryState extends State<ListViewCategory> {
     );
   }
 
-  String getTralatedCategory(String category) {
-    String translatedCategory = "";
+  String getTranslatedCategory(String category) {
     switch (category) {
       case "All":
-        translatedCategory = context.l10n.category_all;
+        return context.l10n.category_all;
       case "Grocery":
-        translatedCategory = context.l10n.category_grocery;
+        return context.l10n.category_grocery;
       case "Shopping":
-        translatedCategory = context.l10n.category_shopping;
+        return context.l10n.category_shopping;
       case "Todo":
-        translatedCategory = context.l10n.category_todo;
+        return context.l10n.category_todo;
       case "CheckList":
-        translatedCategory = context.l10n.category_checklist;
+        return context.l10n.category_checklist;
+      default:
+        return category; // Fallback to the original category name
     }
-    return translatedCategory;
   }
 }

@@ -32,7 +32,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
         return DropdownMenuItem<TodoCategory?>(
           value: category,
           child: Text(
-            getTralatedCategory(category.toString().split('.').last),
+            getTranslatedCategory(category.toString().split('.').last),
             style: appTextStyle
                 .getQuicksand(MyFontWeight.regular)
                 .copyWith(color: currentBrightness == Brightness.light ? appColors.blue : null),
@@ -42,20 +42,20 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
     );
   }
 
-  String getTralatedCategory(String category) {
-    String translatedCategory = "";
+  String getTranslatedCategory(String category) {
     switch (category) {
       case "All":
-        translatedCategory = context.l10n.category_all;
+        return context.l10n.category_all;
       case "Grocery":
-        translatedCategory = context.l10n.category_grocery;
+        return context.l10n.category_grocery;
       case "Shopping":
-        translatedCategory = context.l10n.category_shopping;
+        return context.l10n.category_shopping;
       case "Todo":
-        translatedCategory = context.l10n.category_todo;
+        return context.l10n.category_todo;
       case "CheckList":
-        translatedCategory = context.l10n.category_checklist;
+        return context.l10n.category_checklist;
+      default:
+        return category; // Fallback to the original category name
     }
-    return translatedCategory;
   }
 }
