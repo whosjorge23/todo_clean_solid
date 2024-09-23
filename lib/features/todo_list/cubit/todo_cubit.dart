@@ -99,6 +99,10 @@ class TodoCubit extends Cubit<TodoState> {
     return priorityColors[todo.priority] ?? Colors.grey;
   }
 
+  void updateSelectedCategoryIndex(int index) {
+    emit(state.copyWith(selectedCategoryIndex: index));
+  }
+
   Future<void> updateCategoryIndex(int index) async {
     emit(state.copyWith(selectedCategoryIndex: index));
   }
