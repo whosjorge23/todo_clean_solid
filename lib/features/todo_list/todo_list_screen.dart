@@ -249,9 +249,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       ),
                       padding: const EdgeInsets.all(16),
                       child: Text(
-                        context.l10n.add_todo,
+                        context.l10n.add_todo +
+                            ' - ' +
+                            getTranslatedCategory(selectedCategoryTodo.name) +
+                            ' - ' +
+                            getTranslatedPriority(selectedPriorityTodo.name),
                         style: appTextStyle
-                            .getQuicksand(MyFontWeight.semiBold)
+                            .getQuicksand(MyFontWeight.bold)
                             .copyWith(color: appColors.white),
                       ),
                     ),
@@ -471,7 +475,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       child: Text(
                         context.l10n.edit_todo,
                         style: appTextStyle
-                            .getQuicksand(MyFontWeight.semiBold)
+                            .getQuicksand(MyFontWeight.bold)
                             .copyWith(color: appColors.white),
                       ),
                     ),
@@ -658,6 +662,22 @@ class _TodoListScreenState extends State<TodoListScreen> {
         return context.l10n.category_checklist;
       default:
         return category;
+    }
+  }
+
+  String getTranslatedPriority(String priority) {
+    switch (priority) {
+      case "Low":
+        return context.l10n.priority_low;
+      case "Medium":
+        return context.l10n.priority_medium;
+      case "High":
+        return context.l10n.priority_high;
+      case "Maximum":
+        return context.l10n.priority_maximum;
+
+      default:
+        return priority;
     }
   }
 }
