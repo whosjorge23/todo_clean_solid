@@ -35,11 +35,13 @@ class _CategoryChipState extends State<CategoryChip> {
         margin: const EdgeInsets.all(7),
         decoration: BoxDecoration(
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(16),
-          color: widget.isSelected ? Theme.of(context).colorScheme.primary.withOpacity(0.7) : null,
+          color: widget.isSelected
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.7)
+              : null,
         ),
         child: Center(
           child: Text(

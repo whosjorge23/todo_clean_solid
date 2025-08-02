@@ -31,7 +31,9 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   '${context.l10n.change_theme}:',
-                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
+                  style: appTextStyle
+                      .getQuicksand(MyFontWeight.semiBold)
+                      .copyWith(fontSize: 16),
                 ),
                 // Switch(
                 //   value: settingsCubit.state == ThemeMode.dark ? true : false,
@@ -59,9 +61,10 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.language,
-                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
-                        fontSize: 16,
-                      ),
+                  style:
+                      appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
+                            fontSize: 16,
+                          ),
                 ),
                 const Gap(10),
                 const LanguageDropdown(),
@@ -74,7 +77,9 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   '${context.l10n.enable_creation_date}:',
-                  style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(fontSize: 16),
+                  style: appTextStyle
+                      .getQuicksand(MyFontWeight.semiBold)
+                      .copyWith(fontSize: 16),
                 ),
                 CupertinoSwitch(
                     value: settingsCubit.state.isDateTimeEnabled!,
@@ -126,17 +131,20 @@ class LanguageDropdown extends StatelessWidget {
               value: const Locale('en'),
               child: Text(
                 context.l10n.language_en,
-                style: appTextStyle
-                    .getQuicksand(MyFontWeight.bold)
-                    .copyWith(color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
+                style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.7)),
               ),
             ),
             DropdownMenuItem(
               value: const Locale('it'),
               child: Text(
                 context.l10n.language_it,
-                style:
-                    appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(color: Theme.of(context).colorScheme.primary),
+                style: appTextStyle
+                    .getQuicksand(MyFontWeight.bold)
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ],

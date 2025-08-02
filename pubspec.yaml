@@ -47,7 +47,7 @@ dependencies:
   dio: ^5.3.2
   uuid: ^4.1.0
   shared_preferences:
-  intl: ^0.19.0
+  intl: ^0.20.2
   gap: ^3.0.1
   lottie: ^2.7.0
   flutter_swipe_action_cell: ^3.1.2

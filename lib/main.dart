@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:isar/isar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:todo_clean_solid/bootstrap.dart';
 import 'package:todo_clean_solid/features/loading_screen/loading_screen.dart';
 import 'package:todo_clean_solid/features/settings/cubit/settings_cubit.dart';
 import 'package:todo_clean_solid/features/settings/settings_screen.dart';
 import 'package:todo_clean_solid/features/todo_list/cubit/todo_cubit.dart';
 import 'package:todo_clean_solid/features/todo_list/todo_list_screen.dart';
-import 'package:todo_clean_solid/models/todo.dart';
+import 'package:todo_clean_solid/l10n/app_localizations.dart';
 import 'package:todo_clean_solid/shared_export.dart';
 
 void main() async {
@@ -18,7 +15,7 @@ void main() async {
   runApp(
     BlocProvider(
       create: (_) => SettingsCubit(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -36,11 +33,12 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             colorScheme: ColorScheme.light(primary: appColors.blue),
             useMaterial3: true,
-            floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
+            floatingActionButtonTheme:
+                FloatingActionButtonThemeData(foregroundColor: appColors.white),
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
-                backgroundColor: appColors.blue.withOpacity(0.7),
+                backgroundColor: appColors.blue.withValues(alpha: 0.7),
                 foregroundColor: appColors.white,
                 elevation: 0,
               ),
@@ -50,11 +48,12 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             colorScheme: ColorScheme.dark(primary: appColors.darkBlue),
             useMaterial3: true,
-            floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: appColors.white),
+            floatingActionButtonTheme:
+                FloatingActionButtonThemeData(foregroundColor: appColors.white),
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
-                backgroundColor: appColors.darkBlue.withOpacity(0.7),
+                backgroundColor: appColors.darkBlue.withValues(alpha: 0.7),
                 foregroundColor: appColors.white,
                 elevation: 0,
               ),
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
             routes: [
               GoRoute(
                 path: '/',
-                pageBuilder: (context, state) => MaterialPage(
+                pageBuilder: (context, state) => const MaterialPage(
                   child: LoadingScreen(),
                 ),
               ),
@@ -77,7 +76,7 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => MaterialPage(
                   child: BlocProvider<TodoCubit>(
                     create: (context) => TodoCubit(),
-                    child: TodoListScreen(
+                    child: const TodoListScreen(
                       title: 'Clean Todos',
                     ),
                   ),

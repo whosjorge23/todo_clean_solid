@@ -19,7 +19,7 @@ import 'package:todo_clean_solid/widgets/reusable_alert_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatefulWidget {
-  TodoListScreen({Key? key, required this.title}) : super(key: key);
+  const TodoListScreen({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -36,14 +36,22 @@ class _TodoListScreenState extends State<TodoListScreen> {
     final todosCubit = context.watch<TodoCubit>();
     final todosCubitState = todosCubit.state;
     return todosCubitState.when(
-      initial: (todos, selectedCategoryIndex, selectedAddCategoryIndex, selectedAddPriorityIndex,
-          selectedEditCategoryIndex, selectedEditPriorityIndex) {
+      initial: (todos,
+          selectedCategoryIndex,
+          selectedAddCategoryIndex,
+          selectedAddPriorityIndex,
+          selectedEditCategoryIndex,
+          selectedEditPriorityIndex) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            centerTitle: false,
+            backgroundColor:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
             title: Text(
               widget.title,
-              style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
+              style: appTextStyle
+                  .getQuicksand(MyFontWeight.bold)
+                  .copyWith(color: appColors.white),
             ),
             actions: [
               IconButton(
@@ -67,36 +75,51 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                 key: ObjectKey(i),
                                 trailingActions: [
                                   SwipeAction(
-                                    icon: const Icon(Icons.edit, color: Colors.white),
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.white),
                                     closeOnTap: true,
                                     onTap: (CompletionHandler handler) async {
-                                      final updatedTodo = await _showEditTodoDialog(context, todos[i], todosCubit);
+                                      final updatedTodo =
+                                          await _showEditTodoDialog(
+                                              context, todos[i], todosCubit);
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
-                                        todosCubit.updateTodo(todos[i].id, updatedTodo);
-                                        await todosCubit.getTodosByCategory(updatedTodo.category);
+                                        todosCubit.updateTodo(
+                                            todos[i].id, updatedTodo);
+                                        await todosCubit.getTodosByCategory(
+                                            updatedTodo.category);
                                       }
                                     },
-                                    color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withValues(alpha: 0.7),
                                   ),
                                 ],
                                 child: ListTile(
                                   leading: Checkbox(
                                     value: todos[i].isCompleted,
-                                    onChanged: (value) => todosCubit.toggleTodoStatus(todos[i].id, value!),
+                                    onChanged: (value) => todosCubit
+                                        .toggleTodoStatus(todos[i].id, value!),
                                   ),
                                   title: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         todos[i].title,
-                                        style: appTextStyle.getQuicksand(MyFontWeight.medium).copyWith(
-                                              color: todosCubit.getColorForTodoPriority(todos[i]),
+                                        style: appTextStyle
+                                            .getQuicksand(MyFontWeight.medium)
+                                            .copyWith(
+                                              color: todosCubit
+                                                  .getColorForTodoPriority(
+                                                      todos[i]),
                                             ),
                                       ),
                                       Text(
                                         '${context.l10n.category}: ${getTranslatedCategory(todos[i].category.name)}',
-                                        style: appTextStyle.getQuicksand(MyFontWeight.light),
+                                        style: appTextStyle
+                                            .getQuicksand(MyFontWeight.light),
                                       ),
                                       BlocBuilder<SettingsCubit, SettingsState>(
                                         builder: (context, state) {
@@ -105,7 +128,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                             child: Text(
                                               todos[i].dateTimestamp,
                                               style: appTextStyle
-                                                  .getQuicksand(MyFontWeight.light)
+                                                  .getQuicksand(
+                                                      MyFontWeight.light)
                                                   .copyWith(color: Colors.grey),
                                             ),
                                           );
@@ -120,8 +144,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         context,
                                         title: context.l10n.delete_todo,
                                         content: context.l10n.are_you_sure,
-                                        confirmButtonText: context.l10n.generic_yes,
-                                        cancelButtonText: context.l10n.generic_no,
+                                        confirmButtonText:
+                                            context.l10n.generic_yes,
+                                        cancelButtonText:
+                                            context.l10n.generic_no,
                                         onConfirm: () {
                                           todosCubit.deleteTodo(todos[i].id);
                                           Navigator.pop(context);
@@ -140,7 +166,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     : Center(
                         child: Text(
                           context.l10n.nothing_to_display,
-                          style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
+                          style:
+                              appTextStyle.getQuicksand(MyFontWeight.semiBold),
                         ),
                       ),
               ),
@@ -148,9 +175,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            backgroundColor:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+            elevation: 0,
             onPressed: () async {
-              final todo = await _showAddTodoDialog(context, selectedCategoryIndex, todosCubit);
+              final todo = await _showAddTodoDialog(
+                  context, selectedCategoryIndex, todosCubit);
               if (todo != null) {
                 if (!context.mounted) return;
                 todosCubit.addNewTodo(todo);
@@ -165,7 +195,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 
-  Future<Todo?> _showAddTodoDialog(BuildContext context, int index, TodoCubit todosCubit) async {
+  Future<Todo?> _showAddTodoDialog(
+      BuildContext context, int index, TodoCubit todosCubit) async {
     myController.clear();
     var selectedPriorityTodo = TodoPriority.Low;
     var selectedCategoryTodo = TodoCategory.values[index];
@@ -194,7 +225,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     Container(
                       width: double.maxFinite,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.7),
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(28),
                           topRight: Radius.circular(28),
@@ -203,7 +237,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       padding: const EdgeInsets.all(16),
                       child: Text(
                         context.l10n.add_todo,
-                        style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
+                        style: appTextStyle
+                            .getQuicksand(MyFontWeight.semiBold)
+                            .copyWith(color: appColors.white),
                       ),
                     ),
                     Padding(
@@ -212,7 +248,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 16),
                               child: TextField(
                                 controller: myController,
                                 decoration: InputDecoration(
@@ -220,21 +257,32 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                   labelText: context.l10n.enter_todo,
                                   labelStyle: appTextStyle
                                       .getQuicksand(MyFontWeight.semiBold)
-                                      .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
+                                      .copyWith(
+                                          color: currentBrightness ==
+                                                  Brightness.dark
+                                              ? appColors.white
+                                              : null),
                                   hintText: context.l10n.enter_todo,
-                                  hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
+                                  hintStyle: appTextStyle
+                                      .getQuicksand(MyFontWeight.regular),
                                 ),
                               ),
                             ),
                             Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${context.l10n.category}:',
-                                      style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
-                                          color: currentBrightness == Brightness.light ? appColors.blue : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.semiBold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.light
+                                                  ? appColors.blue
+                                                  : null),
                                     ),
                                   ],
                                 ),
@@ -245,11 +293,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final isSelected = index == state.selectedAddCategoryIndex;
+                                      final isSelected = index ==
+                                          state.selectedAddCategoryIndex;
                                       return CategoryChip(
                                         onTap: () {
-                                          todosCubit.updateAddCategoryIndex(index);
-                                          selectedCategoryTodo = TodoCategory.values[index];
+                                          todosCubit
+                                              .updateAddCategoryIndex(index);
+                                          selectedCategoryTodo =
+                                              TodoCategory.values[index];
                                         },
                                         isSelected: isSelected,
                                         category: TodoCategory.values[index],
@@ -264,12 +315,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${context.l10n.priority}:',
-                                      style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
-                                          color: currentBrightness == Brightness.light ? appColors.blue : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.semiBold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.light
+                                                  ? appColors.blue
+                                                  : null),
                                     ),
                                   ],
                                 ),
@@ -280,11 +337,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final isSelected = index == state.selectedAddPriorityIndex;
+                                      final isSelected = index ==
+                                          state.selectedAddPriorityIndex;
                                       return PriorityChip(
                                         onTap: () {
-                                          todosCubit.updateAddPriorityIndex(index);
-                                          selectedPriorityTodo = TodoPriority.values[index];
+                                          todosCubit
+                                              .updateAddPriorityIndex(index);
+                                          selectedPriorityTodo =
+                                              TodoPriority.values[index];
                                         },
                                         isSelected: isSelected,
                                         priority: TodoPriority.values[index],
@@ -304,15 +364,22 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                   child: ElevatedButton(
                                     child: Text(
                                       context.l10n.generic_add,
-                                      style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
-                                          color: currentBrightness == Brightness.dark ? appColors.white : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.bold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.dark
+                                                  ? appColors.white
+                                                  : null),
                                     ),
                                     onPressed: () {
                                       final enteredText = myController.text;
                                       if (enteredText.isNotEmpty) {
                                         final now = DateTime.now();
-                                        final formatter = DateFormat('dd-MM-yyyy hh:mm a');
-                                        final formattedDate = formatter.format(now);
+                                        final formatter =
+                                            DateFormat('dd-MM-yyyy hh:mm a');
+                                        final formattedDate =
+                                            formatter.format(now);
                                         todo = Todo(
                                           title: enteredText,
                                           isCompleted: false,
@@ -321,7 +388,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                           category: selectedCategoryTodo,
                                         );
                                         todosCubit.updateSelectedCategoryIndex(
-                                            selectedCategoryTodo.index); // Update selected category index
+                                            selectedCategoryTodo
+                                                .index); // Update selected category index
                                       }
                                       context.pop();
                                     },
@@ -347,7 +415,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
     return todo;
   }
 
-  Future<Todo?> _showEditTodoDialog(BuildContext context, Todo todo, TodoCubit todosCubit) async {
+  Future<Todo?> _showEditTodoDialog(
+      BuildContext context, Todo todo, TodoCubit todosCubit) async {
     myController.text = todo.title;
     var selectedPriorityTodo = todo.priority;
     var selectedCategoryTodo = todo.category;
@@ -375,7 +444,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.7),
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(28),
                           topRight: Radius.circular(28),
@@ -385,7 +457,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       padding: const EdgeInsets.all(16),
                       child: Text(
                         context.l10n.edit_todo,
-                        style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(color: appColors.white),
+                        style: appTextStyle
+                            .getQuicksand(MyFontWeight.semiBold)
+                            .copyWith(color: appColors.white),
                       ),
                     ),
                     Padding(
@@ -394,7 +468,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 16),
                               child: TextField(
                                 controller: myController,
                                 decoration: InputDecoration(
@@ -403,20 +478,31 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                   labelText: context.l10n.update_todo,
                                   labelStyle: appTextStyle
                                       .getQuicksand(MyFontWeight.semiBold)
-                                      .copyWith(color: currentBrightness == Brightness.dark ? appColors.white : null),
-                                  hintStyle: appTextStyle.getQuicksand(MyFontWeight.regular),
+                                      .copyWith(
+                                          color: currentBrightness ==
+                                                  Brightness.dark
+                                              ? appColors.white
+                                              : null),
+                                  hintStyle: appTextStyle
+                                      .getQuicksand(MyFontWeight.regular),
                                 ),
                               ),
                             ),
                             Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${context.l10n.category}:',
-                                      style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
-                                          color: currentBrightness == Brightness.light ? appColors.blue : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.semiBold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.light
+                                                  ? appColors.blue
+                                                  : null),
                                     ),
                                   ],
                                 ),
@@ -427,13 +513,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final isSelected = state.selectedEditCategoryIndex != null
-                                          ? index == state.selectedEditCategoryIndex
+                                      final isSelected = state
+                                                  .selectedEditCategoryIndex !=
+                                              null
+                                          ? index ==
+                                              state.selectedEditCategoryIndex
                                           : index == selectedCategoryTodo.index;
                                       return CategoryChip(
                                         onTap: () {
-                                          todosCubit.updateEditCategoryIndex(index);
-                                          selectedCategoryTodo = TodoCategory.values[index];
+                                          todosCubit
+                                              .updateEditCategoryIndex(index);
+                                          selectedCategoryTodo =
+                                              TodoCategory.values[index];
                                         },
                                         isSelected: isSelected,
                                         category: TodoCategory.values[index],
@@ -448,12 +539,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${context.l10n.priority}:',
-                                      style: appTextStyle.getQuicksand(MyFontWeight.semiBold).copyWith(
-                                          color: currentBrightness == Brightness.light ? appColors.blue : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.semiBold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.light
+                                                  ? appColors.blue
+                                                  : null),
                                     ),
                                   ],
                                 ),
@@ -464,13 +561,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final isSelected = state.selectedEditPriorityIndex != null
-                                          ? index == state.selectedEditPriorityIndex
+                                      final isSelected = state
+                                                  .selectedEditPriorityIndex !=
+                                              null
+                                          ? index ==
+                                              state.selectedEditPriorityIndex
                                           : index == selectedPriorityTodo.index;
                                       return PriorityChip(
                                         onTap: () {
-                                          todosCubit.updateEditPriorityIndex(index);
-                                          selectedPriorityTodo = TodoPriority.values[index];
+                                          todosCubit
+                                              .updateEditPriorityIndex(index);
+                                          selectedPriorityTodo =
+                                              TodoPriority.values[index];
                                         },
                                         isSelected: isSelected,
                                         priority: TodoPriority.values[index],
@@ -490,8 +592,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                   child: ElevatedButton(
                                     child: Text(
                                       context.l10n.generic_update,
-                                      style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
-                                          color: currentBrightness == Brightness.dark ? appColors.white : null),
+                                      style: appTextStyle
+                                          .getQuicksand(MyFontWeight.bold)
+                                          .copyWith(
+                                              color: currentBrightness ==
+                                                      Brightness.dark
+                                                  ? appColors.white
+                                                  : null),
                                     ),
                                     onPressed: () {
                                       final enteredText = myController.text;

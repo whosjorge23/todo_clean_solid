@@ -31,32 +31,42 @@ class _ListViewCategoryState extends State<ListViewCategory> {
               borderRadius: BorderRadius.circular(16),
               onTap: () {
                 context.read<TodoCubit>().updateCategoryIndex(index);
-                context.read<TodoCubit>().getTodosByCategory(TodoCategory.values[index]);
+                context
+                    .read<TodoCubit>()
+                    .getTodosByCategory(TodoCategory.values[index]);
               },
               child: Container(
                 width: 120,
                 height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 margin: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.7),
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(16),
                   color: isSelected
-                      ? Theme.of(context).colorScheme.primary.withOpacity(0.7)
+                      ? Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.7)
                       : null, // Set background color to red if selected
                 ),
                 child: Center(
                   child: Text(
                     getTranslatedCategory(TodoCategory.values[index].name),
-                    style: appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
-                        color: isSelected
-                            ? appColors.white
-                            : currentBrightness == Brightness.light
-                                ? appColors.blue
-                                : null),
+                    style:
+                        appTextStyle.getQuicksand(MyFontWeight.bold).copyWith(
+                            color: isSelected
+                                ? appColors.white
+                                : currentBrightness == Brightness.light
+                                    ? appColors.blue
+                                    : null),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
