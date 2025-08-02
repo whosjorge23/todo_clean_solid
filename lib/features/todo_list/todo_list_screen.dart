@@ -97,10 +97,20 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                   ),
                                 ],
                                 child: ListTile(
-                                  leading: Checkbox(
-                                    value: todos[i].isCompleted,
-                                    onChanged: (value) => todosCubit
-                                        .toggleTodoStatus(todos[i].id, value!),
+                                  leading: Transform.scale(
+                                    scale: 1.2,
+                                    child: Checkbox(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                      ),
+                                      value: todos[i].isCompleted,
+                                      onChanged: (value) =>
+                                          todosCubit.toggleTodoStatus(
+                                              todos[i].id, value!),
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
                                   ),
                                   title: Column(
                                     crossAxisAlignment:
@@ -114,6 +124,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                               color: todosCubit
                                                   .getColorForTodoPriority(
                                                       todos[i]),
+                                              decoration: todos[i].isCompleted
+                                                  ? TextDecoration.lineThrough
+                                                  : null,
                                             ),
                                       ),
                                       Text(
