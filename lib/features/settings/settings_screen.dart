@@ -15,7 +15,6 @@ class SettingsScreen extends StatelessWidget {
     final settingsCubit = context.watch<SettingsCubit>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           context.l10n.settings,
           style: appTextStyle.getQuicksand(MyFontWeight.semiBold),
