@@ -34,14 +34,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   Widget build(BuildContext context) {
     final todosCubit = context.watch<TodoCubit>();
-    final todosCubitState = todosCubit.state;
-    return todosCubitState.when(
-      initial: (todos,
-          selectedCategoryIndex,
-          selectedAddCategoryIndex,
-          selectedAddPriorityIndex,
-          selectedEditCategoryIndex,
-          selectedEditPriorityIndex) {
+
+    return BlocBuilder<TodoCubit, TodoState>(
+      builder: (context, state) {
+        final todosCubitState = state;
         return Scaffold(
           appBar: AppBar(
             centerTitle: false,
@@ -65,9 +61,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
               const Gap(10),
               const SizedBox(height: 50, child: ListViewCategory()),
               Expanded(
-                child: todos.isNotEmpty
+                child: todosCubitState.todos.isNotEmpty
                     ? ListView.builder(
-                        itemCount: todos.length,
+                        itemCount: todosCubitState.todos.length,
                         itemBuilder: (context, i) {
                           return Column(
                             children: [
@@ -81,11 +77,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     onTap: (CompletionHandler handler) async {
                                       final updatedTodo =
                                           await _showEditTodoDialog(
-                                              context, todos[i], todosCubit);
+                                              context,
+                                              todosCubitState.todos[i],
+                                              todosCubit);
                                       if (updatedTodo != null) {
                                         if (!context.mounted) return;
                                         todosCubit.updateTodo(
-                                            todos[i].id, updatedTodo);
+                                            todosCubitState.todos[i].id,
+                                            updatedTodo);
                                         await todosCubit.getTodosByCategory(
                                             updatedTodo.category);
                                       }
@@ -104,10 +103,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         borderRadius:
                                             BorderRadius.circular(4.0),
                                       ),
-                                      value: todos[i].isCompleted,
+                                      value:
+                                          todosCubitState.todos[i].isCompleted,
                                       onChanged: (value) =>
                                           todosCubit.toggleTodoStatus(
-                                              todos[i].id, value!),
+                                              todosCubitState.todos[i].id,
+                                              value!),
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                     ),
@@ -117,20 +118,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        todos[i].title,
+                                        todosCubitState.todos[i].title,
                                         style: appTextStyle
                                             .getQuicksand(MyFontWeight.medium)
                                             .copyWith(
                                               color: todosCubit
                                                   .getColorForTodoPriority(
-                                                      todos[i]),
-                                              decoration: todos[i].isCompleted
+                                                      todosCubitState.todos[i]),
+                                              decoration: todosCubitState
+                                                      .todos[i].isCompleted
                                                   ? TextDecoration.lineThrough
                                                   : null,
                                             ),
                                       ),
                                       Text(
-                                        '${context.l10n.category}: ${getTranslatedCategory(todos[i].category.name)}',
+                                        '${context.l10n.category}: ${getTranslatedCategory(todosCubitState.todos[i].category.name)}',
                                         style: appTextStyle
                                             .getQuicksand(MyFontWeight.light),
                                       ),
@@ -139,7 +141,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                           return Visibility(
                                             visible: state.isDateTimeEnabled,
                                             child: Text(
-                                              todos[i].dateTimestamp,
+                                              todosCubitState
+                                                  .todos[i].dateTimestamp,
                                               style: appTextStyle
                                                   .getQuicksand(
                                                       MyFontWeight.light)
@@ -162,7 +165,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                         cancelButtonText:
                                             context.l10n.generic_no,
                                         onConfirm: () {
-                                          todosCubit.deleteTodo(todos[i].id);
+                                          todosCubit.deleteTodo(
+                                              todosCubitState.todos[i].id);
                                           Navigator.pop(context);
                                         },
                                         onCancel: () => Navigator.pop(context),
@@ -193,7 +197,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
             elevation: 0,
             onPressed: () async {
               final todo = await _showAddTodoDialog(
-                  context, selectedCategoryIndex, todosCubit);
+                  context, todosCubitState.selectedCategoryIndex, todosCubit);
               if (todo != null) {
                 if (!context.mounted) return;
                 todosCubit.addNewTodo(todo);
@@ -310,8 +314,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final isSelected = index ==
-                                          state.selectedAddCategoryIndex;
+                                      final isSelected =
+                                          index == selectedCategoryTodo.index;
                                       return CategoryChip(
                                         onTap: () {
                                           todosCubit

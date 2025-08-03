@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
 import 'package:todo_clean_solid/constants/todo_constants.dart';
 import 'package:todo_clean_solid/models/todo.dart';
@@ -8,10 +8,8 @@ import 'package:todo_clean_solid/shared_export.dart';
 
 part 'todo_state.dart';
 
-part 'todo_cubit.freezed.dart';
-
 class TodoCubit extends Cubit<TodoState> {
-  TodoCubit() : super(const TodoState.initial()) {
+  TodoCubit() : super(const TodoState()) {
     loadTodos();
   }
 
@@ -28,7 +26,10 @@ class TodoCubit extends Cubit<TodoState> {
     if (state.selectedCategoryIndex == 0) {
       filteredTodos = await isarService.isar.todos.where().findAll();
     } else {
-      filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(todo.category).findAll();
+      filteredTodos = await isarService.isar.todos
+          .filter()
+          .categoryEqualTo(todo.category)
+          .findAll();
     }
     emit(state.copyWith(todos: filteredTodos));
   }
@@ -41,9 +42,14 @@ class TodoCubit extends Cubit<TodoState> {
     if (state.selectedCategoryIndex == 0) {
       filteredTodos = await isarService.isar.todos.where().findAll();
     } else {
-      filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(updatedTodo.category).findAll();
+      filteredTodos = await isarService.isar.todos
+          .filter()
+          .categoryEqualTo(updatedTodo.category)
+          .findAll();
     }
-    emit(state.copyWith(todos: filteredTodos, selectedCategoryIndex: updatedTodo.category.index));
+    emit(state.copyWith(
+        todos: filteredTodos,
+        selectedCategoryIndex: updatedTodo.category.index));
     await getTodosByCategory(TodoCategory.values[state.selectedCategoryIndex]);
   }
 
@@ -56,7 +62,10 @@ class TodoCubit extends Cubit<TodoState> {
       if (state.selectedCategoryIndex == 0) {
         filteredTodos = await isarService.isar.todos.where().findAll();
       } else {
-        filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(todo.category).findAll();
+        filteredTodos = await isarService.isar.todos
+            .filter()
+            .categoryEqualTo(todo.category)
+            .findAll();
       }
       emit(state.copyWith(todos: filteredTodos));
     });
@@ -72,7 +81,10 @@ class TodoCubit extends Cubit<TodoState> {
       if (state.selectedCategoryIndex == 0) {
         filteredTodos = await isarService.isar.todos.where().findAll();
       } else {
-        filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(todo.category).findAll();
+        filteredTodos = await isarService.isar.todos
+            .filter()
+            .categoryEqualTo(todo.category)
+            .findAll();
       }
       emit(state.copyWith(todos: filteredTodos));
     });
@@ -83,7 +95,10 @@ class TodoCubit extends Cubit<TodoState> {
     if (category == TodoCategory.All) {
       filteredTodos = await isarService.isar.todos.where().findAll();
     } else {
-      filteredTodos = await isarService.isar.todos.filter().categoryEqualTo(category).findAll();
+      filteredTodos = await isarService.isar.todos
+          .filter()
+          .categoryEqualTo(category)
+          .findAll();
     }
     emit(state.copyWith(todos: filteredTodos));
   }
@@ -124,6 +139,7 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   void resetEditPriorityAndCategory() {
-    emit(state.copyWith(selectedEditPriorityIndex: null, selectedEditCategoryIndex: null));
+    emit(state.copyWith(
+        selectedEditPriorityIndex: null, selectedEditCategoryIndex: null));
   }
 }
